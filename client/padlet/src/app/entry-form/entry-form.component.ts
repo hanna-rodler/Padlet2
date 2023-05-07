@@ -67,13 +67,9 @@ export class EntryFormComponent implements OnInit {
     this.entryService.create(entry).subscribe(res => {
       this.entry = EntryFactory.empty();
       this.entryForm.reset(EntryFactory.empty());
-      // PadletDetailComponent.addingEntry = false;
-      // this.reload();
       let currentUrl = this.router.url;
       console.log(currentUrl);
       window.location.reload();
-      // this.location.reload();
-      // this.router.navigate([""], {relativeTo: this.route});
     })
   }
 

@@ -34,4 +34,8 @@ export class PadletDetailComponent implements OnInit{
     this.addingEntry = true;
   }
 
+  cancel() {
+    this.addingEntry = false;
+  }
+
 }

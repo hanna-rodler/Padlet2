@@ -34,4 +34,15 @@ class EntryController extends Controller
             (), 420);
         }
     }
+
+    public function delete($id) {
+        $entry = Entry::where('id', $id)->first();
+        if($entry != null){
+            $entry->delete();
+            return response()->json('entry ('.$id.') successfully deleted',
+                200);
+        }
+        else
+            return response()->json('entry could not be deleted - it does not exist', 422);
+    }
 }

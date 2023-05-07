@@ -12,6 +12,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { EntryFormComponent } from './entry-form/entry-form.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { EntryComponent } from './entry/entry.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { EntryComponent } from './entry/entry.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [PadletService],
   bootstrap: [AppComponent]

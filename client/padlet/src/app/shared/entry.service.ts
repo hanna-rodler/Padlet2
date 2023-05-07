@@ -24,5 +24,10 @@ export class EntryService {
     return throwError(error);
   }
 
+  delete(id: number): Observable<any>{
+    return this.http.delete(`${this.api}/entry/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
 }
 
