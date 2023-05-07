@@ -1,13 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Padlet } from "./padlet";
 import {Entry, Comment, Rating} from "../shared/entry";
+import {catchError, retry} from "rxjs/operators";
+import {Observable, throwError} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 
 @Injectable()
 export class PadletService {
-  padlets: Padlet[];
+  private api = "http://padlet.s2010456026.student.kwmhgb.at/api";
+  // padlets: Padlet[];
 
-  constructor() {
+  constructor(private http:HttpClient) {
+
+  }
+
+  /*constructor() {
     this.padlets = [
       new Padlet(12, 'Anniversary', true, 1, [new Entry(7, 'Picnic in the park',
         'Enjoy a beautiful day outside with your significant other by having a picnic in a nearby park. Bring a blanket, your favorite snacks, and maybe even some board games to make the most of your time together.',
@@ -34,17 +42,39 @@ export class PadletService {
             ], [new Rating(4, 10, 1), new Rating(5, 10, 1), new Rating(1, 10, 1)])
         ]),
     ]
+  }*/
+
+  // TODO: get private and public padlets, create, update, delete padlets
+  getAllPublicPadlets(): Observable<Array<Padlet>> {
+    const padlets =  this.http.get<Array<Padlet>>(`${this.api}/publicPadlets`).
+    pipe(retry(3)).pipe(catchError(this.errorHandler));
+    return padlets;
   }
 
-  getAll() {
+  getSingle(strId: string): Observable<Padlet> {
+    const id:number = Number(strId);
+    return this.http.get<Padlet>(`${this.api}/padlets/${id}`).
+    pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  create(padlet: Padlet): Observable<any> {
+    return this.http.post(`${this.api}/save`, padlet).pipe(retry(3))
+    .pipe(catchError(this.errorHandler));
+  }
+
+  /*getAll() {
     this.padlets.forEach((padlet) => {
       padlet.strId = padlet.id.toString();
     })
     return this.padlets;
+  }*/
+
+  private errorHandler(error: Error | any): Observable<any> {
+    return throwError(error);
   }
 
-  getSingle(strId: string) : Padlet {
+  /*getSingle(strId: string) : Padlet {
     return <Padlet>this.padlets.find(padlet => padlet.strId === strId);
-  }
+  }*/
 
 }

@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Padlet } from '../shared/padlet';
 import { PadletService } from "../shared/padlet.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Rating} from "../shared/rating";
+import {PadletFactory} from "../shared/padlet-factory";
 
 @Component({
   selector: 'bs-padlet-detail',
@@ -11,23 +12,27 @@ import {Rating} from "../shared/rating";
   ]
 })
 export class PadletDetailComponent implements OnInit{
-  padlet: Padlet | undefined
+  padlet: Padlet = PadletFactory.empty();
+  addingEntry = false;
 
   constructor(
-    private ps: PadletService,
-    private route: ActivatedRoute
+    private padletService: PadletService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
     const params = this.route.snapshot.params;
-    this.padlet = this.ps.getSingle(params['id']);
+    // this.padlet = this.padletService.getSingle(params['id']);
+    this.padletService.getSingle(params['id']).subscribe(
+      (p:Padlet) => {this.padlet = p; console.log(this.padlet)}
+    );
   }
 
   getRating(ratings: Array<Rating>): number {
     const sum = ratings.reduce((total, rating) => total + rating.stars, 0);
     const avg = Number((sum / ratings.length).toFixed(2));
-    console.log(ratings);
     return avg;
   }
 
@@ -36,6 +41,11 @@ export class PadletDetailComponent implements OnInit{
       return comments.length;
     }
     return 0;
+  }
+
+  addEntry() {
+    this.addingEntry = true;
+    console.log('.');
   }
 
 }

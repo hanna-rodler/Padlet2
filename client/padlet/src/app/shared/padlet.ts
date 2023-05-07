@@ -1,14 +1,15 @@
 import { Entry } from "./entry";
+import {Timestamp} from "rxjs";
 export { Entry } from "./entry";
 
 export class Padlet {
+  // TODO: created und updated nicht optional machen
   constructor(
     public id:number,
     public name:string,
     public isPublic:boolean,
     public user_id:number,
-    public entries?: Entry[],
-    public strId?:string,
+    public entries?: Entry[]
   ) {
   }
 }

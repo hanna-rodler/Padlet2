@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import {PadletService} from "./shared/padlet.service";
 import { CommentModalComponent } from './comment-modal/comment-modal.component';
 import {HttpClientModule} from "@angular/common/http";
+import { EntryFormComponent } from './entry-form/entry-form.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {HttpClientModule} from "@angular/common/http";
     PadletListComponent,
     PadletDetailComponent,
     HomeComponent,
-    CommentModalComponent
+    CommentModalComponent,
+    EntryFormComponent
   ],
   imports: [
     BrowserModule,

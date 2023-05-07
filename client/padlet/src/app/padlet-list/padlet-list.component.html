@@ -1,7 +1,7 @@
 <div class="ui container">
   <h1 class="ui header">Padlets</h1>
   <div class="ui large selection relaxed animated list">
-    <a *ngFor="let padlet of padlets" class="item" [routerLink]="padlet.strId">
+    <a *ngFor="let padlet of padlets" class="item" [routerLink]="padlet.id.toString()">
         <i class="icon large sticky note outline black"></i>
       <div class="content">
         <div class="header">{{padlet.name}}</div>

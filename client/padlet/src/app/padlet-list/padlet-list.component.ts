@@ -17,7 +17,10 @@ export class PadletListComponent implements OnInit {
   constructor(private padletService: PadletService) {
   }
   ngOnInit() {
-    this.padlets = this.padletService.getAll();
+    this.padletService.getAllPublicPadlets().subscribe(
+      res => {this.padlets = res}
+    );
+    // this.padlets = this.padletService.getAll();
   }
 
 }
