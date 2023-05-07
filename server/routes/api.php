@@ -36,4 +36,6 @@ Route::post('/padlets/{id}/saveEntry', [EntryController::class, 'save']);
 Route::post('/padlets/{id}/saveComment', [CommentController::class, 'save']);
 Route::post('/padlets/{id}/saveRating', [RatingController::class, 'save']);
 
+Route::put('/padlets/{id}', [PadletController::class, 'update']);
+
 Route::delete('/entry/{id}', [EntryController::class, 'delete']);

@@ -73,6 +73,11 @@ export class PadletService {
     return throwError(error);
   }
 
+  update(padlet: Padlet): Observable<any> {
+    return this.http.put(`${this.api}/padlets/${padlet.id}`, padlet).pipe(retry(3))
+      .pipe(catchError(this.errorHandler));
+  }
+
   /*getSingle(strId: string) : Padlet {
     return <Padlet>this.padlets.find(padlet => padlet.strId === strId);
   }*/

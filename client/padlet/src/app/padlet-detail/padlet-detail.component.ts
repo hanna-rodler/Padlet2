@@ -14,6 +14,7 @@ import {PadletFactory} from "../shared/padlet-factory";
 export class PadletDetailComponent implements OnInit{
   padlet: Padlet = PadletFactory.empty();
   addingEntry = false;
+  editingPadlet = false;
 
   constructor(
     private padletService: PadletService,
@@ -36,6 +37,11 @@ export class PadletDetailComponent implements OnInit{
 
   cancel() {
     this.addingEntry = false;
+  }
+
+  editPadlet() {
+    this.editingPadlet = true;
+    console.log('editing Padlet');
   }
 
 }

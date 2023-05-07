@@ -13,6 +13,13 @@ use Mockery\Exception;
 
 class PadletController extends Controller
 {
+
+    private function parseRequest(Request $request) : Request {
+        // get date and convert it - its in ISO 8601, e.g. "2018-01-01T23:00:00.000Z"
+        $date = new \DateTime($request->published);
+        $request['published'] = $date;
+        return $request;
+    }
     //
     public function publicList():JsonResponse {
         $publicPadlets = Padlet::where('isPublic', true)
@@ -62,6 +69,35 @@ class PadletController extends Controller
         }
 
     }
+
+    public function update(Request $request, string $id) : JsonResponse
+    {
+        DB::beginTransaction();
+        try{
+            $padlet = Padlet::where('id',$id)->first();
+            if($padlet!=null){
+                //$request=$this->parseRequest($request);
+                $padlet->update($request->all());
+                $padlet->save();
+
+                DB::commit();
+                $padlet1=Padlet::where('id', $id)->first();
+                // return a vaild http response
+                return response()->json($padlet1, 201);
+            } else {
+                return response()->json("Padlet not found",
+                    420);
+            }
+        }
+        catch(\Exception $e){
+            // rollback all queries
+            DB::rollBack();
+            return response()->json("updating padlet failed: "
+                .$e->getMessage(),
+                420);
+        }
+    }
+
 
     private function parseReqeust(Request $request) : Request {
         // get date and convert it - its in ISO 8601, e.g. "2018-01-01T23:00:00.000Z"

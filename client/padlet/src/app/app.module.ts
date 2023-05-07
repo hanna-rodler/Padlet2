@@ -14,6 +14,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { EntryComponent } from './entry/entry.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import { EditPadletFormComponent } from './edit-padlet-form/edit-padlet-form.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {ToastrModule} from "ngx-toastr";
     HomeComponent,
     CommentModalComponent,
     EntryFormComponent,
-    EntryComponent
+    EntryComponent,
+    EditPadletFormComponent
   ],
   imports: [
     BrowserModule,
