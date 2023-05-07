@@ -1,0 +1,338 @@
+<div class="ui container">
+
+<h1 class="ui header">{{ padlet?.name }}</h1>
+
+<!--  TODO: editing and deleting -->
+<div class="ui four stackable cards">
+  <div class="card" *ngFor="let entry of padlet?.entries">
+    <div class="content">
+      <img class="right floated avatar" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
+      <div class="header">
+        {{ entry?.title }}
+      </div>
+      <div class="meta">
+        14h
+      </div>
+      <div class="description">
+        {{ entry?.text}}
+      </div>
+    </div>
+    <div class="extra content">
+        <span class="right floated">
+          <i class="comment black icon"></i> {{getNumComments(entry.comments)}}
+        </span>
+      <span *ngIf="entry.ratings">
+        <i class="yellow star icon"></i> {{getRating(entry.ratings)}}
+      </span>
+      <span *ngIf="!entry.ratings">
+        <i class="star icon"></i> 0
+      </span>
+    </div>
+  </div>
+</div>
+
+
+
+<!--<div class="ui four cards">
+  &lt;!&ndash;<div class="orange card">
+    <div class="content">
+      <div class="right floated">
+        <img class="ui  avatar image" src="https://semantic-ui.com/images/avatar/small/matt.jpg">
+      </div>
+      <div class="right floated meta">Matt</div>
+
+      <div class="header">Cute Dog</div>
+      <div class="meta">
+        <span class="right floated time">2 days ago</span>
+        <span class="category">Rating:
+    <div class="ui star rating" data-rating="4"></div></span>
+      </div>
+      <div class="description">
+        <p></p>
+      </div>
+    </div>
+    <div class="extra content">
+      <div class="center aligned author">
+        <img class="ui avatar image" src="https://semantic-ui.com/images/avatar/small/jenny.jpg"> Jenny
+      </div>
+    </div>
+    <div class="extra content">
+    <span class="left floated like">
+      <i class="like icon"></i>
+      Like
+    </span>
+      <span class="right floated star">
+      <i class="star icon"></i>
+      Favorite
+    </span>
+    </div>
+    <div class="extra">
+      Rating:
+      <div class="ui star rating" data-rating="4"></div>
+    </div>
+  </div>&ndash;&gt;
+
+  <div class="ui card">
+    <div class="content">
+      <div class="right floated meta">14h</div>
+      <img class="ui avatar image" src="https://semantic-ui.com/images/avatar/small/matt.jpg"> Elliot
+    </div>
+    <div class="content">
+      <div class="description">
+        Kristy is an art director living in New York.
+      </div>
+    </div>
+    <div class="extra content">
+      <span class="right floated">
+        <i class="heart outline like icon"></i>
+        17 likes
+      </span>
+      <i class="comment icon"></i>
+      3
+    </div>
+    <div class="extra">
+      Rating:
+      <div class="ui star rating" data-rating="4"></div>
+    </div>
+  </div>
+
+  <div class="ui card">
+    <div class="content">
+      <div class="right floated meta">14h</div>
+      <img src="https://semantic-ui.com/images/avatar/small/matt.jpg" class="ui avatar image"> Elliot
+    </div>
+    <div class="content">
+      <div class="description"> Kristy is an art director living in New York.</div>
+    </div>
+    <div class="extra"><span class="right floated"><i class="comment icon"></i> 3 </span><i class="star icon"></i> 3
+    </div>
+  </div>
+
+  <div class="ui card">
+    <div class="content">
+      <div class="right floated meta">14h</div>
+      <img class="ui avatar image" src="https://semantic-ui.com/images/avatar/small/matt.jpg"> Elliot
+    </div>
+    <div class="content">
+      <div class="description">
+        Kristy is an art director living in New York.
+      </div>
+    </div>
+    <div class="extra content">
+      <span class="right floated">
+        <i class="heart outline like icon"></i>
+        17 likes
+      </span>
+      <i class="comment icon"></i>
+      3
+    </div>
+  </div>
+
+  <div class="ui card">
+    <div class="content">
+      <div class="right floated meta">14h</div>
+      <img class="ui avatar image" src="https://semantic-ui.com/images/avatar/small/matt.jpg"> Elliot
+    </div>
+    <div class="content">
+      <div class="description">
+        Kristy is an art director living in New York. This could be interesting.
+      </div>
+    </div>
+    <div class="extra content">
+        <span class="right floated">
+          <i class="comment icon"></i> 3
+        </span>
+      Rating:
+      <div class="ui star rating" data-rating="4"></div>
+    </div>
+  </div>
+
+  <div class="ui card">
+    <div class="content">
+      <div class="right floated meta">14h</div>
+      <img class="ui avatar image" src="https://semantic-ui.com/images/avatar/small/matt.jpg"> Elliot
+    </div>
+    <div class="content">
+      <div class="description">
+        Kristy is an art director living in New York.
+      </div>
+    </div>
+    <div class="extra">
+      <span class="right floated">
+          <i class="comment icon"></i> 3
+        </span>
+      <i class="star icon"></i>
+      3
+    </div>
+    <div class="extra">
+      Rating:
+      <div class="ui star rating" data-rating="4"></div>
+    </div>
+  </div>
+
+  </div>-->
+
+  <!--<div class="ui four stackable cards">
+    <div class="card">
+      <div class="content">
+        <img class="right floated avatar" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
+        <div class="header">
+
+&lt;!&ndash;          Elliot Fu&ndash;&gt;
+        </div>
+        <div class="meta">
+          14h
+        </div>
+        <div class="description">
+          Elliot requested permission to view your contact details
+        </div>
+      </div>
+      <div class="extra content">
+        <span class="right floated">
+          <i class="comment icon"></i> 3
+        </span>
+        Rating:
+        <div class="ui star rating" data-rating="4"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="content">
+        <img class="right floated avatar" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
+        <div class="header">
+          Art Director
+        </div>
+        <div class="meta">
+          14h
+        </div>
+        &lt;!&ndash;<div class="description">
+          Kristy is an art director living in New York.
+        </div>&ndash;&gt;
+      </div>
+      <div class="extra content">
+        <span class="right floated">
+          <i class="comment icon"></i> 3
+        </span>
+        Rating:
+        <div class="ui star rating" data-rating="4"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="content">
+        <img class="right floated avatar" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
+        <div class="header">
+          Elliot Fu
+        </div>
+        <div class="meta">
+          14h
+        </div>
+        <div class="description">
+          Elliot requested permission to view your contact details
+        </div>
+      </div>
+      <div class="extra content">
+        <span class="right floated">
+          <i class="comment icon"></i> 3
+        </span>
+        Rating:
+        <div class="ui star rating" data-rating="4"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="content">
+        <img class="right floated avatar" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
+        <div class="header">
+          Art Director TEST TEST TEST TEST
+        </div>
+        <div class="meta">
+          14h
+        </div>
+        <div class="description">
+          Kristy is an art director living in New York.
+        </div>
+      </div>
+      <div class="extra content">
+        <span class="right floated">
+          <i class="comment icon"></i> 3
+        </span>
+        Rating:
+        <div class="ui star rating" data-rating="4"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="content">
+        <img class="avatar" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
+        <div class="meta right floated">
+          14h
+        </div>
+      </div>
+      <div class="content">
+        <div class="description">
+          Kristy is an art director living in New York.
+        </div>
+      </div>
+      <div class="extra content">
+        <span class="right floated">
+          <i class="comment icon"></i> 3
+        </span>
+        Rating:
+        <div class="ui star rating" data-rating="4"></div>
+      </div>
+    </div>
+
+</div>-->
+
+<!--<div class="ui card">
+  <div class="content">
+    <div class="description">
+      Kristy is an art director living in New York.
+    </div>
+    <div class="meta">
+      <span>by Hanna</span>
+      <span class="meta right floated">
+            14h
+          </span>
+    </div>
+  </div>
+  <div class="extra content">
+        <span class="right floated">
+          <i class="comment icon"></i> 3
+        </span>
+    Rating:
+    <div class="ui star rating" data-rating="4"></div>
+  </div>
+</div>-->
+
+<!--<div class="ui card">
+  <div class="content">
+    <div class="description">
+      Elliot requested permission to view your contact details
+    </div>
+    <div class="description">
+      <span class="meta">
+      14h
+    </span>
+      <img class="right floated avatar" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
+    </div>
+  </div>
+  <div class="extra content">
+        <span class="right floated">
+          <i class="comment icon"></i> 3
+        </span>
+    Rating:
+    <div class="ui star rating" data-rating="4"></div>
+  </div>
+</div>-->
+
+  <div class="container">
+    <button [routerLink]="'/padlets'" class="ui red button">Zurück zur
+      Padletliste
+    </button>
+  </div>
+
+</div>
+
+
