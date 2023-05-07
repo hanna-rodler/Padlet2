@@ -26,26 +26,12 @@ export class PadletDetailComponent implements OnInit{
     const params = this.route.snapshot.params;
     // this.padlet = this.padletService.getSingle(params['id']);
     this.padletService.getSingle(params['id']).subscribe(
-      (p:Padlet) => {this.padlet = p; console.log(this.padlet)}
+      (p:Padlet) => {this.padlet = p; }
     );
-  }
-
-  getRating(ratings: Array<Rating>): number {
-    const sum = ratings.reduce((total, rating) => total + rating.stars, 0);
-    const avg = Number((sum / ratings.length).toFixed(2));
-    return avg;
-  }
-
-  getNumComments(comments: any): number {
-    if(comments !== undefined) {
-      return comments.length;
-    }
-    return 0;
   }
 
   addEntry() {
     this.addingEntry = true;
-    console.log('.');
   }
 
 }

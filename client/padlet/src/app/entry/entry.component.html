@@ -1,0 +1,23 @@
+<div class="content">
+  <img class="right floated avatar" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
+  <div class="header">
+    {{ entry?.title }}
+  </div>
+  <div class="meta">
+    14h
+  </div>
+  <div class="description">
+    {{ entry?.text}}
+  </div>
+</div>
+<div class="extra content">
+  <span class="right floated">
+    <i class="comment black icon"></i> {{getNumComments(entry?.comments)}}
+  </span>
+  <span *ngIf="entry?.ratings && entry?.ratings?.length">
+          <i class="yellow star icon"></i> {{getRating(entry?.ratings)}}
+        </span>
+  <span *ngIf="getRating(entry?.ratings) == 0">
+        <i class="star icon"></i> {{getRating(entry?.ratings)}}
+  </span>
+</div>

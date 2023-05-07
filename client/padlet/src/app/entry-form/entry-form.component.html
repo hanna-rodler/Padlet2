@@ -1,0 +1,16 @@
+<form action="" class="ui large form" [formGroup]="entryForm" (ngSubmit)="submitForm()">
+  <div class="field">
+    <label>Title</label>
+    <input formControlName="title">
+    <div *ngIf="errors['title']" class="ui negative message">
+      {{errors['title']}}
+    </div>
+  </div>
+  <div class="field">
+    <label>Text</label>
+    <textarea rows="3" formControlName="text"></textarea>
+  </div>
+
+  <button type="submit" class="ui button"
+          [disabled]="entryForm.invalid">Save</button>
+</form>

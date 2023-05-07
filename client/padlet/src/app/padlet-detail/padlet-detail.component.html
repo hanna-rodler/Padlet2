@@ -15,37 +15,12 @@
 
   <div class="ui raised segment" *ngIf="addingEntry">
     <h3>Add Entry</h3>
-    <form action="" class="ui large form">
-
-    </form>
+    <bs-entry-form></bs-entry-form>
   </div>
 
   <!--  TODO: editing and deleting -->
   <div class="ui four stackable cards" *ngIf="padlet.entries && padlet.entries.length > 0">
-      <div class="card" *ngFor="let entry of padlet.entries">
-        <div class="content">
-          <img class="right floated avatar" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
-          <div class="header">
-            {{ entry?.title }}
-          </div>
-          <div class="meta">
-            14h
-          </div>
-          <div class="description">
-            {{ entry?.text}}
-          </div>
-        </div>
-        <div class="extra content">
-          <span class="right floated">
-            <i class="comment black icon"></i> {{getNumComments(entry.comments)}}
-          </span>
-          <span *ngIf="entry.ratings">
-          <i class="yellow star icon"></i> {{getRating(entry.ratings)}}
-        </span>
-          <span *ngIf="!entry.ratings">
-          <i class="star icon"></i> 0
-        </span>
-        </div>
+      <div class="card bs-entry" *ngFor="let entry of padlet.entries" [entry]="entry">
       </div>
   </div>
 

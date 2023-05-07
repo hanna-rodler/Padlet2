@@ -10,6 +10,8 @@ import {PadletService} from "./shared/padlet.service";
 import { CommentModalComponent } from './comment-modal/comment-modal.component';
 import {HttpClientModule} from "@angular/common/http";
 import { EntryFormComponent } from './entry-form/entry-form.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import { EntryComponent } from './entry/entry.component';
 
 @NgModule({
   declarations: [
@@ -18,12 +20,14 @@ import { EntryFormComponent } from './entry-form/entry-form.component';
     PadletDetailComponent,
     HomeComponent,
     CommentModalComponent,
-    EntryFormComponent
+    EntryFormComponent,
+    EntryComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [PadletService],
   bootstrap: [AppComponent]
