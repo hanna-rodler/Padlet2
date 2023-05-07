@@ -18,9 +18,6 @@ class EntryController extends Controller
         */
         /*echo '<pre>';
         var_dump($request);
-        echo '</pre>';
-        echo '<pre>';
-        var_dump($id);
         echo '</pre>';*/
         DB::beginTransaction();
         try {
