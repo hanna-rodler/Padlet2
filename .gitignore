@@ -16,3 +16,34 @@ server/yarn-error.log
 server/.fleet
 /.idea
 /.vscode
+
+.gitignore2
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+# Compiled output
+client/dist
+client/tmp
+client/padlet/dist
+client/padlet/tmp
+client/padlet/out-tsc
+client/padlet/bazel-out
+client/padlet/.vscode
+client/padlet/.editorconfig
+
+# Node
+client/padlet/node_modules
+client/padlet/npm-debug.log
+client/padlet/yarn-error.log
+client/npm-debug.log
+client/yarn-error.log
+
+# Miscellaneous
+client/padlet/.angular/cache
+client/padlet/.sass-cache/
+client/.sass-cache/
+client/padlet/connect.lock
+client/padlet/coverage
+client/padlet/libpeerconnection.log
+client/padlet/testem.log
+client/testem.log
+client/padlet/typings
