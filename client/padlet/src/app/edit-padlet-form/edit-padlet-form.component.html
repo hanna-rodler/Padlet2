@@ -1,0 +1,14 @@
+<form action="" class="ui large form" [formGroup]="editPadletForm" (ngSubmit)="submitForm()">
+  <input type="hidden" formControlName="id">
+  <div class="field">
+    <label>my name</label>
+    <input formControlName="name" type="text">
+    <div *ngIf="errors['name']" class="ui negative message">
+      {{errors['name']}}
+    </div>
+  </div>
+<!--  TODO Rechteverwaltung -->
+
+  <button type="submit" class="ui button"
+          [disabled]="editPadletForm.invalid">Save</button>
+</form>
