@@ -4,6 +4,7 @@ import { PadletService } from "../shared/padlet.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Rating} from "../shared/rating";
 import {PadletFactory} from "../shared/padlet-factory";
+import {ToastrModule, ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'bs-padlet-detail',
@@ -19,7 +20,8 @@ export class PadletDetailComponent implements OnInit{
   constructor(
     private padletService: PadletService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
   }
 
@@ -42,6 +44,21 @@ export class PadletDetailComponent implements OnInit{
   editPadlet() {
     this.editingPadlet = true;
     console.log('editing Padlet');
+  }
+
+  deletePadlet(id:number) {
+    if (confirm('Do you really want to delete the padlet?')) {
+      if (id !== undefined) {
+        this.padletService.delete(id).subscribe(res => {
+          /*this.router.navigate(['../'],
+            {relativeTo: this.route});*/
+          this.router.navigate(['../../padlets'],
+            {relativeTo: this.route});
+          this.toastr.success("The Entry was successfully deleted", "Deleted");}
+        )
+      }
+      console.log('deleted Padlet');
+    }
   }
 
 }

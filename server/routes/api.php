@@ -28,14 +28,18 @@ Route::get('/publicPadlets', [PadletController::class,  'publicList']);
 // TODO: get all public padlets and private padlets from specific user
 Route::get('/padlets', [PadletController::class, 'privateList2']);
 Route::get('/padlets/{id}', [PadletController::class, 'detail']);
+Route::post('/padlets', [PadletController::class, 'save']);
+Route::put('/padlets/{id}', [PadletController::class, 'update']);
+Route::delete('/padlets/{id}', [PadletController::class, 'delete']);
 
 Route::get('/ratingExists/{entryId}/{userId}', [RatingController::class, 'ratingExistsAPI']);
 
-Route::post('/save', [PadletController::class, 'save']);
-Route::post('/padlets/{id}/saveEntry', [EntryController::class, 'save']);
-Route::post('/padlets/{id}/saveComment', [CommentController::class, 'save']);
-Route::post('/padlets/{id}/saveRating', [RatingController::class, 'save']);
+Route::post('/entries', [EntryController::class, 'save']);
+Route::put('/entries/{id}', [EntryController::class, 'update']);
 
-Route::put('/padlets/{id}', [PadletController::class, 'update']);
 
-Route::delete('/entry/{id}', [EntryController::class, 'delete']);
+Route::post('/comments/{id}', [CommentController::class, 'save']);
+Route::post('/ratings/{id}', [RatingController::class, 'save']);
+
+
+Route::delete('/entries/{id}', [EntryController::class, 'delete']);

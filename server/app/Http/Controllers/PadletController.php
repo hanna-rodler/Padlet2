@@ -98,6 +98,17 @@ class PadletController extends Controller
         }
     }
 
+    public function delete($id) {
+        $padlet = Padlet::where('id', $id)->first();
+        if($padlet != null){
+            $padlet->delete();
+            return response()->json('padlet ('.$id.') successfully deleted',
+                200);
+        }
+        else
+            return response()->json('padlet could not be deleted - it does not exist', 422);
+    }
+
 
     private function parseReqeust(Request $request) : Request {
         // get date and convert it - its in ISO 8601, e.g. "2018-01-01T23:00:00.000Z"

@@ -7,11 +7,12 @@ use App\Models\Padlet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
+use Illuminate\Http\JsonResponse;
 
 class EntryController extends Controller
 {
     //
-    public function save($id, Request $request){
+    public function save(Request $request){
         /*+
         * use a transaction for saving model including relations
         * if one query fails, complete SQL statements will be rolled back
@@ -32,6 +33,32 @@ class EntryController extends Controller
             DB::rollBack();
             return response()->json("saving entry failed: ", $e->getMessage
             (), 420);
+        }
+    }
+
+    public function update(Request $request, string $id) : JsonResponse
+    {
+        DB::beginTransaction();
+        try{
+            $entry = Entry::where('id',$id)->first();
+            if($entry!=null){
+                $entry->update($request->all());
+                $entry->save();
+
+                DB::commit();
+                $entry1=Entry::where('id', $id)->first();
+                return response()->json($entry1, 201);
+            } else {
+                return response()->json("Entry not found",
+                    420);
+            }
+        }
+        catch(\Exception $e){
+            // rollback all queries
+            DB::rollBack();
+            return response()->json("updating entry failed: "
+                .$e->getMessage(),
+                420);
         }
     }
 

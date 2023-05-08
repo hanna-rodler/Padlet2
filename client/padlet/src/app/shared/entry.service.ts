@@ -15,7 +15,7 @@ export class EntryService {
   }
 
   create(entry: Entry): Observable<any> {
-    return this.http.post(`${this.api}/padlets/${entry.padlet_id}/saveEntry`, entry).
+    return this.http.post(`${this.api}/entries/${entry.padlet_id}`, entry).
       pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
@@ -25,7 +25,7 @@ export class EntryService {
   }
 
   delete(id: number): Observable<any>{
-    return this.http.delete(`${this.api}/entry/${id}`)
+    return this.http.delete(`${this.api}/entries/${id}`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 

@@ -78,6 +78,12 @@ export class PadletService {
       .pipe(catchError(this.errorHandler));
   }
 
+  delete(id: number): Observable<any> {
+    console.log('deleting padlet', id);
+    return this.http.delete(`${this.api}/padlets/${id}`).pipe(retry(3))
+      .pipe(catchError(this.errorHandler));
+  }
+
   /*getSingle(strId: string) : Padlet {
     return <Padlet>this.padlets.find(padlet => padlet.strId === strId);
   }*/
