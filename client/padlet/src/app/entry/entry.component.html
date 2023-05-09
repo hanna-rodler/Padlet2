@@ -1,28 +1,38 @@
-<div class="content" (click)="openEntryDetailView()">
+<div class="content"(click)="openEntryDetailView(entry?.id)">
   <img class="right floated avatar" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
-  <div class="header">
-    {{ entry?.title }}
-  </div>
-  <div class="meta">
-    14h
-  </div>
-  <div class="description">
-    {{ entry?.text}}
-  </div>
+    <div class="header">
+      {{ entry?.title }}
+    </div>
+    <div class="meta">
+      14h
+    </div>
+    <div class="description">
+      {{ entry?.text}}
+    </div>
+</div>
+<div class="extra content">
+<!--  if berechtigungen-->
+  <span (click)="editEntry(entry?.id)">
+    <i class="pencil alternate icon"></i>
+  </span>
+  <span class="right floated" (click)="deleteEntry(entry?.id)">
+      <i class="trash icon"></i>
+  </span>
 </div>
 <div class="extra content">
   <span class="right floated" (click)="openComments()">
     <i class="comment black icon"></i> {{getNumComments(entry?.comments)}}
   </span>
   <span *ngIf="entry?.ratings && entry?.ratings?.length">
-          <i class="yellow star icon"></i> {{getRating(entry?.ratings)}}
+          <i class="yellow star icon"></i> avg rating: {{getRating(entry?.ratings)}}
         </span>
   <span *ngIf="getRating(entry?.ratings) == 0">
-        <i class="star icon"></i> {{getRating(entry?.ratings)}}
+        <i class="star icon"></i> no ratings
   </span>
-  <span class="right floated" (click)="deleteEntry(entry?.id)">
-      <i class="trash icon"></i>
-  </span>
+</div>
+
+<div *ngIf="editingEntry">
+  <bs-entry-form></bs-entry-form>
 </div>
 
 <!--<div class="ui four cards">

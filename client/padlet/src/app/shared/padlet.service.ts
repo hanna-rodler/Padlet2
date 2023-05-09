@@ -58,7 +58,7 @@ export class PadletService {
   }
 
   create(padlet: Padlet): Observable<any> {
-    return this.http.post(`${this.api}/save`, padlet).pipe(retry(3))
+    return this.http.post(`${this.api}/padlets`, padlet).pipe(retry(3))
     .pipe(catchError(this.errorHandler));
   }
 

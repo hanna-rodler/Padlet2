@@ -1,4 +1,4 @@
-<form action="" class="ui large form" [formGroup]="editPadletForm" (ngSubmit)="submitForm()">
+<form action="" class="ui large form" [formGroup]="padletForm" (ngSubmit)="submitForm()">
   <input type="hidden" formControlName="id">
   <div class="field">
     <label>Name</label>
@@ -7,8 +7,9 @@
       {{errors['name']}}
     </div>
   </div>
-<!--  TODO Rechteverwaltung -->
+<!--  TODO: public / private -->
+  <!--  TODO Rechteverwaltung -->
 
   <button type="submit" class="ui button"
-          [disabled]="editPadletForm.invalid">Save</button>
+          [disabled]="padletForm.invalid">Save</button>
 </form>

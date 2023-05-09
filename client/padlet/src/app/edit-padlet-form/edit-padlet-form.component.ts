@@ -29,7 +29,6 @@ export class EditPadletFormComponent implements OnInit {
   ngOnInit() {
     // TODO: aktuelle UserId hinzufügen.
     const id:number = this.route.snapshot.params['id'];
-    console.log('init', id);
     this.padletService.getSingle(id.toString()).subscribe(
       padlet => {
         this.padlet = padlet;

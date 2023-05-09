@@ -1,6 +1,8 @@
 <div class="ui container">
 
-  <h1 class="ui header">{{ padlet.name }} <span *ngIf="!editingPadlet" style="margin-left: 1rem;" (click)="editPadlet()"> <i class="pencil alternate icon"></i> </span></h1>
+  <h1 class="ui header">{{ padlet.name }} <span *ngIf="!editingPadlet" style="margin-left: 1rem;"
+                                                (click)="editPadlet()"> <i class="pencil alternate icon"></i> </span>
+  </h1>
 
   <div class="ui segment" *ngIf="editingPadlet">
     <bs-edit-padlet-form></bs-edit-padlet-form>
@@ -22,17 +24,16 @@
   </div>
 
   <div class="ui raised segment" *ngIf="addingEntry">
-    <h3>Add Entry</h3>
     <bs-entry-form></bs-entry-form>
   </div>
 
   <!--  TODO: editing and deleting -->
   <div class="ui four stackable cards" *ngIf="padlet.entries && padlet.entries.length > 0">
-      <div class="card bs-entry" *ngFor="let entry of padlet.entries" [entry]="entry">
-      </div>
+    <div class="card bs-entry" *ngFor="let entry of padlet.entries" [entry]="entry">
+    </div>
   </div>
 
-<!--  Padlet Entries-->
+  <!--  Padlet Entries-->
   <div *ngIf="padlet.entries && padlet.entries.length == 0" class="ui segment">
     There are no padlet entries yet.
   </div>
@@ -41,6 +42,25 @@
     <button [routerLink]="'/padlets'" class="ui orange button">Zurück zu allen Padlets
     </button>
   </div>
+
+  <m-button (click)="showModal = true">Open</m-button>
+  <m-modal *ngIf="showModal" (close)="showModal = false" imageContent>
+    <m-modal-header>
+      <m-icon icon="question"></m-icon> Profile Picture
+    </m-modal-header>
+    <div class="ui medium image">
+      <img>
+    </div>
+    <div class="description">
+      <div class="ui header">We've auto-chosen a profile image for you.</div>
+      <p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your registered e-mail address.</p>
+      <p>Is it okay to use this photo?</p>
+    </div>
+    <m-modal-footer>
+      <m-button color="black" (click)="showModal = false">Nope</m-button>
+      <m-button icon="checkmark" iconPosition="right" primary (click)="showModal = false">Yep, that's me</m-button>
+    </m-modal-footer>
+  </m-modal>
 
 </div>
 

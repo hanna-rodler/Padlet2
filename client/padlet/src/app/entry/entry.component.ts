@@ -13,6 +13,7 @@ import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 })
 export class EntryComponent {
   @Input() entry: Entry | undefined;
+  editingEntry = false;
 
   constructor(private entryService: EntryService,
               private toastr: ToastrService,
@@ -39,10 +40,8 @@ export class EntryComponent {
     console.log('open Comments');
   }
 
-  openEntryDetailView() {
-    console.log('entry detail');
-    this.toastr.success("The Entry was successfully deleted", "Deleted");
-
+  openEntryDetailView(id: number | undefined) {
+    this.router.navigate(["../../padlets/entry/"+id], {relativeTo: this.route});
   }
 
   deleteEntry(id:number | undefined) {
@@ -60,5 +59,11 @@ export class EntryComponent {
       }
       console.log('delete Entry');
     }
+  }
+
+  editEntry(id: number | undefined){
+    if(id !== undefined)
+      sessionStorage.setItem('entryId', id.toString());
+    this.editingEntry = true;
   }
 }

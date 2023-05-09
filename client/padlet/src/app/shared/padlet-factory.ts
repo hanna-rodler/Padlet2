@@ -3,7 +3,7 @@ import { Padlet } from './padlet';
 export class PadletFactory {
 
   static empty(): Padlet {
-    return new Padlet(0,'Hungry old kittens', false,0);
+    return new Padlet(0,'', false,0);
   }
 
   static fromObject(rawPadlet: any): Padlet {

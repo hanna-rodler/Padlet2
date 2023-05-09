@@ -10,4 +10,5 @@ export class ErrorMessage {
 
 export const EntryFormErrorMessages = [
   new ErrorMessage('title', 'required', 'Please enter a title.'),
+  new ErrorMessage('text', 'required', 'Please enter a text.'),
 ];

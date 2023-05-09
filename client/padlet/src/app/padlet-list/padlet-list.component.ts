@@ -11,6 +11,7 @@ import { PadletService } from "../shared/padlet.service";
 })
 export class PadletListComponent implements OnInit {
   padlets: Padlet[] = [];
+  creatingPadlet = false;
 
   @Output() showDetailsEvent = new EventEmitter<Padlet>();
 
@@ -21,6 +22,14 @@ export class PadletListComponent implements OnInit {
       res => {this.padlets = res}
     );
     // this.padlets = this.padletService.getAll();
+  }
+
+  cancel() {
+    this.creatingPadlet = false;
+  }
+
+  createPadlet() {
+    this.creatingPadlet = true;
   }
 
 }

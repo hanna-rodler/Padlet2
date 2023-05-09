@@ -1,4 +1,7 @@
+<h3>Add Entry</h3>
+
 <form action="" class="ui large form" [formGroup]="entryForm" (ngSubmit)="submitForm()">
+  <input type="hidden" formControlName="id">
   <div class="field">
     <label>Title</label>
     <input formControlName="title">
@@ -9,6 +12,9 @@
   <div class="field">
     <label>Text</label>
     <textarea rows="3" formControlName="text"></textarea>
+    <div *ngIf="errors['text']" class="ui negative message">
+      {{errors['text']}}
+    </div>
   </div>
 
   <button type="submit" class="ui button"
