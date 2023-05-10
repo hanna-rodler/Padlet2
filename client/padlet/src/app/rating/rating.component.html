@@ -1,0 +1,16 @@
+<div class="comment">
+  <a class="avatar">
+    <img src="https://semantic-ui.com/images/avatar/small/joe.jpg">
+  </a>
+  <div class="content">
+    <a class="author">Matt</a>
+    <div class="metadata">
+      <span class="date">Today at 5:42PM</span>
+    </div>
+    <div class="text">
+      <i *ngFor="let r of getRatingArray(rating?.stars)" class="yellow star icon"></i>
+      <i *ngFor="let r of getRatingArray2(rating?.stars)" class="grey star icon"></i>
+    </div>
+  </div>
+</div>
+
