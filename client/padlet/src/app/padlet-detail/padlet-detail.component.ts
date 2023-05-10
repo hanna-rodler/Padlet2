@@ -16,7 +16,6 @@ export class PadletDetailComponent implements OnInit{
   padlet: Padlet = PadletFactory.empty();
   addingEntry = false;
   editingPadlet = false;
-  showModal = false;
 
   constructor(
     private padletService: PadletService,

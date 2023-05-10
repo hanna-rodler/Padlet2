@@ -15,6 +15,11 @@ import { EntryComponent } from './entry/entry.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import { EditPadletFormComponent } from './edit-padlet-form/edit-padlet-form.component';
+import { PadletFormComponent } from './padlet-form/padlet-form.component';
+import { CommentComponent } from './comment/comment.component';
+import { EntryDetailComponent } from './entry-detail/entry-detail.component';
+import {SemanticUiModule} from "@mantic-ui/semantic-ui-angular";
+import { RatingComponent } from './rating/rating.component';
 
 @NgModule({
   declarations: [
@@ -25,10 +30,15 @@ import { EditPadletFormComponent } from './edit-padlet-form/edit-padlet-form.com
     CommentModalComponent,
     EntryFormComponent,
     EntryComponent,
-    EditPadletFormComponent
+    EditPadletFormComponent,
+    PadletFormComponent,
+    CommentComponent,
+    EntryDetailComponent,
+    RatingComponent
   ],
   imports: [
     BrowserModule,
+    SemanticUiModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,

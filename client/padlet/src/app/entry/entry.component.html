@@ -1,4 +1,4 @@
-<div class="content"(click)="openEntryDetailView(entry?.id)">
+<div class="content modalCard" (click)="showModal = true">
   <img class="right floated avatar" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
     <div class="header">
       {{ entry?.title }}
@@ -34,6 +34,42 @@
 <div *ngIf="editingEntry">
   <bs-entry-form></bs-entry-form>
 </div>
+
+
+<m-modal *ngIf="showModal" (close)="showModal = false" imageContent>
+  <m-modal-header>
+    {{ entry?.title }}
+  </m-modal-header>
+  <div class="description">
+    <div class="ui header">Entry by: Matt</div>
+    <p>
+      {{entry?.text}}
+    </p>
+    <div class="ui comments" style="margin-top: 3rem;" *ngIf="entry?.comments && entry?.comments?.length">
+      <h3 class="ui dividing header">Comments</h3>
+      <div class="bs-comment" *ngFor="let comment of entry?.comments" [comment]="comment">
+      </div>
+      <form class="ui reply form">
+        <div class="field">
+          <textarea rows="4"></textarea>
+        </div>
+        <div class="ui blue right labeled submit icon button">
+          <i class="icon comment"></i> Add Comment
+        </div>
+      </form>
+    </div>
+    <div class="ui comments" style="margin-top: 3rem;" *ngIf="entry?.ratings && entry?.ratings?.length">
+      <h3 class="ui dividing header">Ratings</h3>
+      <div class="ui rating" data-max-rating="1"></div>
+      <div class="bs-rating" *ngFor="let rating of entry?.ratings" [rating]="rating">
+      </div>
+    </div>
+  </div>
+  <m-modal-footer>
+    <m-button color="black" (click)="showModal = false">Close</m-button>
+<!--    <m-button icon="checkmark" iconPosition="right" primary (click)="showModal = false">Yep, that's me</m-button>-->
+  </m-modal-footer>
+</m-modal>
 
 <!--<div class="ui four cards">
   &lt;!&ndash;<div class="orange card">

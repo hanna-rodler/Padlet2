@@ -8,6 +8,6 @@ body {
   margin-top: 1rem;
 }
 
-.icon:hover {
+.icon:hover, .modalCard:hover {
   cursor: pointer;
 }

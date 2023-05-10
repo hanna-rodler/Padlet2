@@ -14,6 +14,7 @@ import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 export class EntryComponent {
   @Input() entry: Entry | undefined;
   editingEntry = false;
+  showModal = false;
 
   constructor(private entryService: EntryService,
               private toastr: ToastrService,

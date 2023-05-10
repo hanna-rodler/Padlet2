@@ -4,6 +4,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EntryController;
 use App\Http\Controllers\PadletController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,7 @@ Route::delete('/padlets/{id}', [PadletController::class, 'delete']);
 
 Route::get('/ratingExists/{entryId}/{userId}', [RatingController::class, 'ratingExistsAPI']);
 
+Route::get('/entries/{id}', [EntryController::class, 'getSingle']);
 Route::post('/entries', [EntryController::class, 'save']);
 Route::put('/entries/{id}', [EntryController::class, 'update']);
 
@@ -43,3 +45,5 @@ Route::post('/ratings/{id}', [RatingController::class, 'save']);
 
 
 Route::delete('/entries/{id}', [EntryController::class, 'delete']);
+
+Route::get('/users/{id}', [UserController::class, 'getUser']);

@@ -72,4 +72,10 @@ class EntryController extends Controller
         else
             return response()->json('entry could not be deleted - it does not exist', 422);
     }
+
+    public function getSingle($id) {
+        $entry = Entry::with('comments', 'ratings')->where('id', $id)->first();
+        return $entry != null ? response()->json($entry, 200) : response()
+            ->json(null, 200);
+    }
 }
