@@ -77,5 +77,7 @@ export class EntryComponent {
 
   removeEntryId() {
     sessionStorage.removeItem('entryId');
+    this.ratingExists = false;
+    this.editingEntry = false
   }
 }

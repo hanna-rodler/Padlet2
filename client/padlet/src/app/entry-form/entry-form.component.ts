@@ -37,6 +37,7 @@ export class EntryFormComponent implements OnInit {
       this.isEditingEntry = true;
       this.entryService.getSingle(entryId).subscribe(entry => {
         this.entry = entry;
+        console.log('on init', this.entry.title);
         this.initEntry();
       });
     } else {
