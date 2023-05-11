@@ -3,6 +3,7 @@
   <h1 class="ui header">{{ padlet.name }} <span *ngIf="!editingPadlet" style="margin-left: 1rem;"
                                                 (click)="editPadlet()"> <i class="pencil alternate icon"></i> </span>
   </h1>
+  <div style="margin-bottom: 2rem;">by {{padlet.user.firstname}} {{padlet.user.lastname}}</div>
 
   <div class="ui segment" *ngIf="editingPadlet">
     <bs-edit-padlet-form></bs-edit-padlet-form>
@@ -28,7 +29,9 @@
   </div>
 
   <!--  TODO: editing and deleting -->
-  <div class="ui four stackable cards" *ngIf="padlet.entries && padlet.entries.length > 0">
+
+  <div *ngIf="padlet.entries && padlet.entries.length > 0"></div>
+  <div class="ui four stackable cards">
     <div class="card bs-entry" *ngFor="let entry of padlet.entries" [entry]="entry">
     </div>
   </div>

@@ -1,9 +1,10 @@
 <div class="comment">
   <a class="avatar">
-    <img src="https://semantic-ui.com/images/avatar/small/joe.jpg">
+    <img *ngIf="rating?.user?.image" [src]="rating?.user?.image">
+    <img *ngIf="!rating?.user?.image" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
   </a>
   <div class="content">
-    <a class="author">Matt</a>
+    <a class="author">{{rating?.user?.firstname}} {{rating?.user?.lastname}}</a>
     <div class="metadata">
       <span class="date">Today at 5:42PM</span>
     </div>

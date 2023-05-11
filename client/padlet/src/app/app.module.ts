@@ -17,9 +17,10 @@ import {ToastrModule} from "ngx-toastr";
 import { EditPadletFormComponent } from './edit-padlet-form/edit-padlet-form.component';
 import { PadletFormComponent } from './padlet-form/padlet-form.component';
 import { CommentComponent } from './comment/comment.component';
-import { EntryDetailComponent } from './entry-detail/entry-detail.component';
 import {SemanticUiModule} from "@mantic-ui/semantic-ui-angular";
 import { RatingComponent } from './rating/rating.component';
+import { CommentFormComponent } from './comment-form/comment-form.component';
+import { RatingFormComponent } from './rating-form/rating-form.component';
 
 @NgModule({
   declarations: [
@@ -33,8 +34,9 @@ import { RatingComponent } from './rating/rating.component';
     EditPadletFormComponent,
     PadletFormComponent,
     CommentComponent,
-    EntryDetailComponent,
-    RatingComponent
+    RatingComponent,
+    CommentFormComponent,
+    RatingFormComponent
   ],
   imports: [
     BrowserModule,

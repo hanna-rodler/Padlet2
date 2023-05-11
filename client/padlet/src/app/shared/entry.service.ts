@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Entry, Comment, Rating} from "../shared/entry";
+import {Entry, Comment, Rating} from "./entry";
 import {catchError, retry} from "rxjs/operators";
 import {Observable, throwError} from "rxjs";
 import {HttpClient} from "@angular/common/http";
@@ -22,11 +22,13 @@ export class EntryService {
   }
 
   create(entry: Entry): Observable<any> {
+    console.log('creating', entry);
     return this.http.post(`${this.api}/entries`, entry).
       pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   errorHandler(error:Error | any):Observable<any> {
+    console.log('caught error');
     // eigentlich sinnvolle Errormeldung
     return throwError(error);
   }

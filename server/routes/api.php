@@ -33,17 +33,17 @@ Route::post('/padlets', [PadletController::class, 'save']);
 Route::put('/padlets/{id}', [PadletController::class, 'update']);
 Route::delete('/padlets/{id}', [PadletController::class, 'delete']);
 
-Route::get('/ratingExists/{entryId}/{userId}', [RatingController::class, 'ratingExistsAPI']);
 
 Route::get('/entries/{id}', [EntryController::class, 'getSingle']);
 Route::post('/entries', [EntryController::class, 'save']);
 Route::put('/entries/{id}', [EntryController::class, 'update']);
+Route::delete('/entries/{d}', [EntryController::class, 'delete']);
 
 
 Route::post('/comments/{id}', [CommentController::class, 'save']);
-Route::post('/ratings/{id}', [RatingController::class, 'save']);
 
+Route::get('/ratings/{entryId}/{userId}', [RatingController::class, 'ratingExists']);
+Route::post('/ratings', [RatingController::class, 'save']);
 
-Route::delete('/entries/{id}', [EntryController::class, 'delete']);
 
 Route::get('/users/{id}', [UserController::class, 'getUser']);

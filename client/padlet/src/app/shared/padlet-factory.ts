@@ -1,9 +1,10 @@
 import { Padlet } from './padlet';
+import {User} from "./user";
 
 export class PadletFactory {
 
   static empty(): Padlet {
-    return new Padlet(0,'', false,0);
+    return new Padlet(0,'', false,0, new User(0, '','', '', ''));
   }
 
   static fromObject(rawPadlet: any): Padlet {

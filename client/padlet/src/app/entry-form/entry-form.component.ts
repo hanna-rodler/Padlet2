@@ -44,13 +44,15 @@ export class EntryFormComponent implements OnInit {
       this.entry.padlet_id = padletId;
       this.initEntry();
     }
+    console.log(this.isEditingEntry);
   }
 
   initEntry() {
+    console.log('init', this.entry);
     this.entryForm = this.fb.group({
+      padlet_id: this.entry.padlet_id,
       title: [this.entry.title, Validators.required],
       text: [this.entry.text, Validators.required],
-      padlet_id: this.entry.padlet_id,
       user_id: 1,
     });
     this.entryForm.statusChanges.subscribe(() => {
@@ -74,6 +76,8 @@ export class EntryFormComponent implements OnInit {
     console.log(this.entryForm.value);
     const entry: Entry = EntryFactory.fromObject(this.entryForm.value);
     entry.id = this.entry.id;
+    console.log('editing: ', this.isEditingEntry);
+    console.log(entry);
     if (this.isEditingEntry) {
       this.entryService.update(entry).subscribe(res => {
         // this.router.navigate(["../../padlets", this.entry.padlet_id], {relativeTo: this.route});
@@ -82,6 +86,7 @@ export class EntryFormComponent implements OnInit {
       });
     } else {
       this.entryService.create(entry).subscribe(res => {
+        console.log('create', res);
         this.entry = EntryFactory.empty();
         this.entryForm.reset(EntryFactory.empty());
         let currentUrl = this.router.url;
@@ -91,11 +96,11 @@ export class EntryFormComponent implements OnInit {
     }
   }
 
-  reload() {
+  /*reload() {
     let currentUrl = this.router.url;
     let navigationExtras: NavigationExtras = {
       skipLocationChange: true
     };
     this.router.navigateByUrl(currentUrl, navigationExtras);
-  }
+  }*/
 }

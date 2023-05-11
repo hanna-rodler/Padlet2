@@ -1,0 +1,16 @@
+<form action="" class="ui form" [formGroup]="ratingForm" (ngSubmit)="submitForm()">
+  <input type="hidden" formControlName="id">
+  <div class="inline field">
+    <label>Rating</label>
+    <input formControlName="stars">
+    <div *ngIf="errors['stars']" class="ui negative message">
+      {{errors['stars']}}
+    </div>
+  </div>
+  <!--  TODO Rechteverwaltung -->
+
+  <button type="submit" class="ui button"
+          [disabled]="ratingForm.invalid">Save</button>
+</form>
+
+

@@ -1,9 +1,10 @@
 import {Entry} from "./padlet";
+import {User} from "./user";
 
 export class EntryFactory {
 
   static empty(): Entry {
-    return new Entry(0, '', '', 1, 1);
+    return new Entry(0, '', '', 1, 1, new User(0,'', '', '', ''));
   }
 
   static fromObject(rawEntry: any) : Entry {
@@ -12,7 +13,8 @@ export class EntryFactory {
       rawEntry.title,
       rawEntry.text,
       rawEntry.padlet_id,
-      rawEntry.user_id
+      rawEntry.user_id,
+      rawEntry.user
     )
   }
 }

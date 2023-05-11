@@ -1,7 +1,7 @@
-<h3>Add Entry</h3>
+<h3 *ngIf="!isEditingEntry">Add Entry</h3>
 
 <form action="" class="ui large form" [formGroup]="entryForm" (ngSubmit)="submitForm()">
-  <input type="hidden" formControlName="id">
+  <input type="hidden" formControlName="entry_id">
   <div class="field">
     <label>Title</label>
     <input formControlName="title">

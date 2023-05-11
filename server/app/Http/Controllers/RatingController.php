@@ -14,8 +14,8 @@ class RatingController extends Controller
     public function save(Request $request):JsonResponse{
         DB::beginTransaction();
         try {
-            //$userId = 1;
             $entry = Rating::create($request->all());
+            DB::commit();
             return response()->json($entry, 201);
             // TODO: make sure rating doesn't
             // (now entry_id and user_id = primary keys. Will throw error at
@@ -34,22 +34,23 @@ class RatingController extends Controller
             //}
         } catch (Exception $e) {
             DB::rollBack();
-            return response()->json("saving comment failed: ", $e->getMessage
+            return response()->json("saving rating failed: ", $e->getMessage
             (), 420);
         }
     }
 
 
-    public function ratingExistsAPI($entryId, $userId):JsonResponse{
+    public function ratingExists($entryId, $userId):JsonResponse{
         $rating = Rating::where('entry_id', $entryId)->where('user_id',
             $userId)->get();
         return $rating != null ? response()->json($rating, 200): response()
             ->json(null, 200);
     }
 
-    public function ratingExists($entryId, $userId):bool{
+    /*public function ratingExists($entryId, $userId):JsonResponse{
         $rating = Rating::where('entry_id', $entryId)->where('user_id',
             $userId)->get();
-        return !($rating==null);
-    }
+        return $rating != null ? response()->json(true, 200) : response()
+            ->json(false, 402);
+    }*/
 }

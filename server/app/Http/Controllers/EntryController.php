@@ -17,12 +17,6 @@ class EntryController extends Controller
         * use a transaction for saving model including relations
         * if one query fails, complete SQL statements will be rolled back
         */
-        /*echo '<pre>';
-        var_dump($request);
-        echo '</pre>';
-        echo '<pre>';
-        var_dump($id);
-        echo '</pre>';*/
         DB::beginTransaction();
         try {
             $entry = Entry::create($request->all());
@@ -74,7 +68,7 @@ class EntryController extends Controller
     }
 
     public function getSingle($id) {
-        $entry = Entry::with('comments', 'ratings')->where('id', $id)->first();
+        $entry = Entry::with('comments', 'ratings', 'user')->where('id', $id)->first();
         return $entry != null ? response()->json($entry, 200) : response()
             ->json(null, 200);
     }

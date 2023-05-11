@@ -1,5 +1,6 @@
 import { Entry } from "./entry";
 import {Timestamp} from "rxjs";
+import {User} from "./user";
 export { Entry } from "./entry";
 
 export class Padlet {
@@ -9,6 +10,7 @@ export class Padlet {
     public name:string,
     public isPublic:boolean,
     public user_id:number,
+    public user: User,
     public entries?: Entry[]
   ) {
   }

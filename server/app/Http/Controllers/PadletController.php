@@ -23,26 +23,27 @@ class PadletController extends Controller
     //
     public function publicList():JsonResponse {
         $publicPadlets = Padlet::where('isPublic', true)
-            ->with('entries.comments', 'entries.ratings')
+            ->with('entries.comments', 'entries.ratings', 'entries.user', 'user')
             ->get();
         return response()->json($publicPadlets, 200);
     }
 
     public function privateList(){
-        $padlets = Padlet::with('entries.comments', 'entries.ratings')
+        $padlets = Padlet::with('entries.comments', 'entries.ratings', 'user', 'entries.user')
             ->get();
         return response()->json($padlets, 200);
     }
 
     public function privateList2(){
         $userId = 2; // add userId as param to api.php
-        $padlets = Padlet::with('entries.comments', 'entries.ratings')
+        $padlets = Padlet::with('entries.comments', 'entries.ratings', 'user')
             ->where('user_id', $userId)->get();
         return response()->json($padlets, 200);
     }
 
     public function detail($id) {
-        $padlet = Padlet::where('id',$id)->with('entries.comments','entries.ratings')
+        $padlet = Padlet::where('id',$id)->with(
+            'entries.comments.user','entries.ratings.user', 'entries.user', 'user')
             ->first();
         return $padlet != null ? response()->json($padlet, 200) : response()
             ->json(null, 200);
