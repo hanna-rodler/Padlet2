@@ -7,9 +7,19 @@
       {{errors['name']}}
     </div>
   </div>
+  <!--<div class="inline field">
+    <div>
+      <input type="checkbox" tabindex="0" class="hidden">
+      <label>make padlet public</label>
+    </div>
+  </div>-->
+  <label>
+    <input type="checkbox" formControlName="isPublic">
+    Make padlet public
+  </label>
 <!--  TODO: public / private -->
   <!--  TODO Rechteverwaltung -->
-
+  <br>
   <button type="submit" class="ui button"
           [disabled]="padletForm.invalid">Save</button>
 </form>

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PadletFactory} from "../shared/padlet-factory";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {PadletService} from "../shared/padlet.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PadletFormErrorMessages} from "./padlet-form-error-messages";
@@ -34,6 +34,7 @@ export class PadletFormComponent implements OnInit {
   initPadlet() {
     this.padletForm = this.fb.group({
       name: [this.padlet.name, Validators.required],
+      isPublic: this.padlet.isPublic,
       id: this.padlet.id,
     });
     this.padletForm.statusChanges.subscribe(() => {
@@ -55,7 +56,7 @@ export class PadletFormComponent implements OnInit {
 
   submitForm() {
     const padlet:Padlet = PadletFactory.fromObject(this.padletForm.value);
-    padlet.isPublic = true;
+    // padlet.isPublic = true;
     padlet.user_id = 2;
     this.padletService.create(padlet).subscribe(res => {
       this.router.navigate(['../padlets/'+res.id],
