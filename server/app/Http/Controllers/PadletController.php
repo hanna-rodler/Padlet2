@@ -28,8 +28,10 @@ class PadletController extends Controller
         return response()->json($publicPadlets, 200);
     }
 
-    public function privateList(){
-        $padlets = Padlet::with('entries.comments', 'entries.ratings', 'user', 'entries.user')
+    public function privateList($id){
+        $padlets = Padlet::where('isPublic', false)->where('user_id', $id)
+            ->with('entries.comments',
+        'entries.ratings', 'user', 'entries.user')
             ->get();
         return response()->json($padlets, 200);
     }

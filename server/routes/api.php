@@ -5,6 +5,7 @@ use App\Http\Controllers\EntryController;
 use App\Http\Controllers\PadletController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,11 +24,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['middleware' => ['api', 'auth.jwt']], function() {
+    Route::get('/padlets/private/{id}', [PadletController::class, 'privateList']);
+});
+
+Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/logout', [AuthController::class, 'logout']);
+
 Route::get('/', [PadletController::class,  'publicList']);
 Route::get('/publicPadlets', [PadletController::class,  'publicList']);
 
 // TODO: get all public padlets and private padlets from specific user
-Route::get('/padlets', [PadletController::class, 'privateList2']);
 Route::get('/padlets/{id}', [PadletController::class, 'detail']);
 Route::post('/padlets', [PadletController::class, 'save']);
 Route::put('/padlets/{id}', [PadletController::class, 'update']);

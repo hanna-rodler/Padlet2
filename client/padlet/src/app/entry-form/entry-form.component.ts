@@ -7,6 +7,7 @@ import {EntryFormErrorMessages} from "./entry-form-error-messages";
 import {Entry} from "../shared/entry";
 import {Location} from '@angular/common';
 import {PadletDetailComponent} from "../padlet-detail/padlet-detail.component";
+import {AuthenticationService} from "../shared/authentication.service";
 
 @Component({
   selector: 'bs-entry-form',
@@ -25,7 +26,8 @@ export class EntryFormComponent implements OnInit {
               private entryService: EntryService,
               private route: ActivatedRoute,
               private router: Router,
-              private location: Location
+              private location: Location,
+              private authService: AuthenticationService
   ) {
     this.entryForm = this.fb.group({});
   }
@@ -54,7 +56,6 @@ export class EntryFormComponent implements OnInit {
       padlet_id: this.entry.padlet_id,
       title: [this.entry.title, Validators.required],
       text: [this.entry.text, Validators.required],
-      user_id: 1,
     });
     this.entryForm.statusChanges.subscribe(() => {
       this.updateErrorMessages();
@@ -79,6 +80,11 @@ export class EntryFormComponent implements OnInit {
     entry.id = this.entry.id;
     console.log('editing: ', this.isEditingEntry);
     console.log(entry);
+    if (this.authService.isLoggedIn()){
+      entry.user_id = this.authService.getCurrentUserId();
+    } else {
+      entry.user_id = 2;
+    }
     if (this.isEditingEntry) {
       this.entryService.update(entry).subscribe(res => {
         // this.router.navigate(["../../padlets", this.entry.padlet_id], {relativeTo: this.route});

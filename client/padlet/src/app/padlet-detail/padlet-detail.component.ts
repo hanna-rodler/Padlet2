@@ -26,6 +26,7 @@ export class PadletDetailComponent implements OnInit{
   }
 
   ngOnInit() {
+    sessionStorage.removeItem('entryId');
     const params = this.route.snapshot.params;
     // this.padlet = this.padletService.getSingle(params['id']);
     this.padletService.getSingle(params['id']).subscribe(

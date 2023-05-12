@@ -5,6 +5,7 @@ import {PadletService} from "../shared/padlet.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PadletFormErrorMessages} from "./padlet-form-error-messages";
 import {Padlet} from "../shared/padlet";
+import {AuthenticationService} from "../shared/authentication.service";
 
 @Component({
   selector: 'bs-padlet-form',
@@ -22,7 +23,8 @@ export class PadletFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private padletService: PadletService,
               private route: ActivatedRoute,
-              private router: Router
+              private router: Router,
+              private authService: AuthenticationService,
   ) {
     this.padletForm = this.fb.group({});
   }
@@ -56,8 +58,12 @@ export class PadletFormComponent implements OnInit {
 
   submitForm() {
     const padlet:Padlet = PadletFactory.fromObject(this.padletForm.value);
-    // padlet.isPublic = true;
-    padlet.user_id = 2;
+    if (this.authService.isLoggedIn()){
+      padlet.user_id = this.authService.getCurrentUserId();
+    } else {
+      padlet.isPublic = true;
+      padlet.user_id = 2;
+    }
     this.padletService.create(padlet).subscribe(res => {
       this.router.navigate(['../padlets/'+res.id],
         {relativeTo: this.route});

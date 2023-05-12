@@ -51,6 +51,12 @@ export class PadletService {
     return padlets;
   }
 
+  getPrivatePadlets(userId: number): Observable<Array<Padlet>> {
+    const padlets =  this.http.get<Array<Padlet>>(`${this.api}/padlets/private/${userId}`).
+    pipe(retry(3)).pipe(catchError(this.errorHandler));
+    return padlets;
+  }
+
   getSingle(strId: string): Observable<Padlet> {
     const id:number = Number(strId);
     return this.http.get<Padlet>(`${this.api}/padlets/${id}`).
