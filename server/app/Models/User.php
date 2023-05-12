@@ -72,6 +72,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function getJWTCustomClaims(){
+        // könnte hier auch Firstname oder Nachname benutzen
         // hier könnte auch die Userrolle oder so hinzugefügt werden
         // alles hier mitgegebene ist im Client verfügbar
         return ['user' => ['id' => $this->id]];

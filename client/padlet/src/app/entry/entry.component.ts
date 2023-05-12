@@ -50,6 +50,7 @@ export class EntryComponent {
             skipLocationChange: true
           };
           this.router.navigateByUrl(currentUrl);*/
+
           this.toastr.success("The Entry was successfully deleted", "Deleted");}
         )
       }

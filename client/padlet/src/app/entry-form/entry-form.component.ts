@@ -6,7 +6,6 @@ import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 import {EntryFormErrorMessages} from "./entry-form-error-messages";
 import {Entry} from "../shared/entry";
 import {Location} from '@angular/common';
-import {PadletDetailComponent} from "../padlet-detail/padlet-detail.component";
 import {AuthenticationService} from "../shared/authentication.service";
 
 @Component({
@@ -39,7 +38,6 @@ export class EntryFormComponent implements OnInit {
       this.isEditingEntry = true;
       this.entryService.getSingle(entryId).subscribe(entry => {
         this.entry = entry;
-        console.log('on init', this.entry.title);
         this.initEntry();
       });
     } else {
@@ -80,6 +78,8 @@ export class EntryFormComponent implements OnInit {
     entry.id = this.entry.id;
     console.log('editing: ', this.isEditingEntry);
     console.log(entry);
+    let currentUrl = this.router.url;
+    console.log(currentUrl);
     if (this.authService.isLoggedIn()){
       entry.user_id = this.authService.getCurrentUserId();
     } else {
@@ -89,7 +89,7 @@ export class EntryFormComponent implements OnInit {
       this.entryService.update(entry).subscribe(res => {
         // this.router.navigate(["../../padlets", this.entry.padlet_id], {relativeTo: this.route});
         sessionStorage.removeItem('entryId');
-        window.location.reload();
+        this.redirectTo(currentUrl);
       });
     } else {
       this.entryService.create(entry).subscribe(res => {
@@ -97,17 +97,18 @@ export class EntryFormComponent implements OnInit {
         this.entry = EntryFactory.empty();
         this.entryForm.reset(EntryFactory.empty());
         let currentUrl = this.router.url;
-        console.log(currentUrl);
-        window.location.reload();
+        this.redirectTo(currentUrl);
       })
     }
   }
 
-  /*reload() {
-    let currentUrl = this.router.url;
-    let navigationExtras: NavigationExtras = {
-      skipLocationChange: true
-    };
-    this.router.navigateByUrl(currentUrl, navigationExtras);
-  }*/
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
+  }
+
+  reload() {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([this.router.url]));
+  }
 }
