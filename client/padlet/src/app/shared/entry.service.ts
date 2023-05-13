@@ -22,7 +22,6 @@ export class EntryService {
   }
 
   create(entry: Entry): Observable<any> {
-    console.log('creating', entry);
     return this.http.post(`${this.api}/entries`, entry).
       pipe(retry(3)).pipe(catchError(this.errorHandler));
   }

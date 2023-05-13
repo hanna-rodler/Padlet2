@@ -45,12 +45,14 @@ export class EntryFormComponent implements OnInit {
       this.entry.padlet_id = padletId;
       this.initEntry();
     }
+    this.initEntry();
     console.log(this.isEditingEntry);
   }
 
   initEntry() {
-    console.log('init', this.entry);
+    // TODO: richtige id setzen
     this.entryForm = this.fb.group({
+      id: this.entry.id,
       padlet_id: this.entry.padlet_id,
       title: [this.entry.title, Validators.required],
       text: [this.entry.text, Validators.required],
@@ -73,13 +75,9 @@ export class EntryFormComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.entryForm.value);
     const entry: Entry = EntryFactory.fromObject(this.entryForm.value);
     entry.id = this.entry.id;
-    console.log('editing: ', this.isEditingEntry);
-    console.log(entry);
     let currentUrl = this.router.url;
-    console.log(currentUrl);
     if (this.authService.isLoggedIn()){
       entry.user_id = this.authService.getCurrentUserId();
     } else {
@@ -87,13 +85,11 @@ export class EntryFormComponent implements OnInit {
     }
     if (this.isEditingEntry) {
       this.entryService.update(entry).subscribe(res => {
-        // this.router.navigate(["../../padlets", this.entry.padlet_id], {relativeTo: this.route});
         sessionStorage.removeItem('entryId');
         this.redirectTo(currentUrl);
       });
     } else {
       this.entryService.create(entry).subscribe(res => {
-        console.log('create', res);
         this.entry = EntryFactory.empty();
         this.entryForm.reset(EntryFactory.empty());
         let currentUrl = this.router.url;

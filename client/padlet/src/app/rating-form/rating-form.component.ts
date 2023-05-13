@@ -30,7 +30,9 @@ export class RatingFormComponent implements OnInit {
   }
 
   initPadlet() {
+    // TODO Achtung rating_id
     this.ratingForm = this.fb.group({
+      rating_id: 0,
       stars: [null, [Validators.min(1), Validators.max(5)]],
     });
     this.ratingForm.statusChanges.subscribe(() => {

@@ -54,7 +54,6 @@ export class EntryComponent {
           this.toastr.success("The Entry was successfully deleted", "Deleted");}
         )
       }
-      console.log('delete Entry');
     }
   }
 

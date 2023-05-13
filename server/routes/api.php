@@ -54,3 +54,4 @@ Route::post('/ratings', [RatingController::class, 'save']);
 
 
 Route::get('/users/{id}', [UserController::class, 'getUser']);
+Route::push('/register', [UserController::class, 'register']);

@@ -34,7 +34,7 @@ export class CommentFormComponent implements OnInit {
   initPadlet() {
     this.commentForm = this.fb.group({
       text: [this.comment.text, Validators.required],
-      id: this.comment.entry_id
+      comment_id: this.comment.entry_id
     });
     this.commentForm.statusChanges.subscribe(() => {
       this.updateErrorMessages();

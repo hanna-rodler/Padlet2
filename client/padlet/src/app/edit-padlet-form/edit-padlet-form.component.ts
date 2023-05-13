@@ -5,6 +5,7 @@ import {PadletService} from "../shared/padlet.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {EditPadletFormErrorMessages} from "./edit-padlet-form-error-messages";
 import {Padlet} from "../shared/padlet";
+import {PadletRouterService} from "../shared/padlet-router.service";
 
 @Component({
   selector: 'bs-edit-padlet-form',
@@ -22,6 +23,8 @@ export class EditPadletFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private padletService: PadletService,
               private route: ActivatedRoute,
+              private router: Router,
+              private padletRouterServ: PadletRouterService,
   ) {
     this.editPadletForm = this.fb.group({});
   }
@@ -36,13 +39,14 @@ export class EditPadletFormComponent implements OnInit {
         console.log(this.padlet);
         this.initPadlet();
       }
-    )
+    );
+    this.initPadlet();
   }
 
   initPadlet() {
     this.editPadletForm = this.fb.group({
-      name: [this.padlet.name, Validators.required],
       id: this.padlet.id,
+      name: [this.padlet.name, Validators.required],
     });
     this.editPadletForm.statusChanges.subscribe(() => {
       this.updateErrorMessages();
@@ -65,15 +69,8 @@ export class EditPadletFormComponent implements OnInit {
     console.log(this.editPadletForm.value);
     const padlet:Padlet = PadletFactory.fromObject(this.editPadletForm.value);
     this.padletService.update(padlet).subscribe(res => {
-      window.location.reload();
+      this.padletRouterServ.redirectTo(this.router.url);
     })
-    /*this.padletService.create(padlet).subscribe(res => {
-      this.padlet = PadletFactory.empty();
-      this.editPadletForm.reset(PadletFactory.empty());
-      let currentUrl = this.router.url;
-      console.log(currentUrl);
-      window.location.reload();
-    })*/
   }
 }
 
