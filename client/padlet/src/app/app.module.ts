@@ -7,7 +7,6 @@ import {PadletListComponent} from './padlet-list/padlet-list.component';
 import {PadletDetailComponent} from './padlet-detail/padlet-detail.component';
 import {HomeComponent} from './home/home.component';
 import {PadletService} from "./shared/padlet.service";
-import {CommentModalComponent} from './comment-modal/comment-modal.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {EntryFormComponent} from './entry-form/entry-form.component';
 import {ReactiveFormsModule} from "@angular/forms";
@@ -37,7 +36,6 @@ import { PrivatePadletsComponent } from './private-padlets/private-padlets.compo
     PadletListComponent,
     PadletDetailComponent,
     HomeComponent,
-    CommentModalComponent,
     EntryFormComponent,
     EntryComponent,
     EditPadletFormComponent,

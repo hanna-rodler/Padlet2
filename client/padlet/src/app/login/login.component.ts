@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../shared/authentication.service";
 
 interface Response {
@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit{
   constructor(
     private fb:FormBuilder,
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private route: ActivatedRoute,
   ) {
     this.loginForm = this.fb.group({});
   }
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit{
     if(val.username && val.password) {
       this.authService.login(val.username, val.password).subscribe((res:any) => {
         this.authService.setSessionStorage((res as Response).access_token);
-        this.router.navigateByUrl("/");
+        this.router.navigate(["../privatePadlets"], {relativeTo: this.route})
       })
     }
   }

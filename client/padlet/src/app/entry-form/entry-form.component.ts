@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {EntryFactory} from "../shared/entry-factory";
-import {FormGroup, FormBuilder, FormArray, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EntryService} from "../shared/entry.service";
-import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {EntryFormErrorMessages} from "./entry-form-error-messages";
 import {Entry} from "../shared/entry";
 import {Location} from '@angular/common';
@@ -32,7 +32,6 @@ export class EntryFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO: aktuelle UserId hinzufügen.
     const entryId = sessionStorage.getItem('entryId');
     if (entryId !== null) {
       this.isEditingEntry = true;
@@ -41,8 +40,7 @@ export class EntryFormComponent implements OnInit {
         this.initEntry();
       });
     } else {
-      const padletId: number = this.route.snapshot.params['id'];
-      this.entry.padlet_id = padletId;
+      this.entry.padlet_id = this.route.snapshot.params['id'];
       this.initEntry();
     }
     this.initEntry();

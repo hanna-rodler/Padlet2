@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Padlet } from "./padlet";
-import {Entry, Comment, Rating} from "../shared/entry";
 import {catchError, retry} from "rxjs/operators";
 import {Observable, throwError} from "rxjs";
 import {HttpClient} from "@angular/common/http";
@@ -46,15 +45,13 @@ export class PadletService {
 
   // TODO: get private and public padlets, create, update, delete padlets
   getAllPublicPadlets(): Observable<Array<Padlet>> {
-    const padlets =  this.http.get<Array<Padlet>>(`${this.api}/publicPadlets`).
+    return this.http.get<Array<Padlet>>(`${this.api}/publicPadlets`).
     pipe(retry(3)).pipe(catchError(this.errorHandler));
-    return padlets;
   }
 
   getPrivatePadlets(userId: number): Observable<Array<Padlet>> {
-    const padlets =  this.http.get<Array<Padlet>>(`${this.api}/padlets/private/${userId}`).
+    return this.http.get<Array<Padlet>>(`${this.api}/padlets/private/${userId}`).
     pipe(retry(3)).pipe(catchError(this.errorHandler));
-    return padlets;
   }
 
   getSingle(strId: string): Observable<Padlet> {

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {Padlet} from "./shared/padlet";
 import {AuthenticationService} from "./shared/authentication.service";
 
 @Component({

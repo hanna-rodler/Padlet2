@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import {Entry, Rating, Comment} from "../shared/entry";
+import { Comment} from "../shared/entry";
 
 
 @Component({

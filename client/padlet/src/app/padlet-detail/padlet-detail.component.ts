@@ -1,10 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import { Padlet } from '../shared/padlet';
 import { PadletService } from "../shared/padlet.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Rating} from "../shared/rating";
 import {PadletFactory} from "../shared/padlet-factory";
-import {ToastrModule, ToastrService} from "ngx-toastr";
+import { ToastrService} from "ngx-toastr";
 import {AuthenticationService} from "../shared/authentication.service";
 
 @Component({

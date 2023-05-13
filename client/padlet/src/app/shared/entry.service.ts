@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Entry, Comment, Rating} from "./entry";
+import {Entry } from "./entry";
 import {catchError, retry} from "rxjs/operators";
 import {Observable, throwError} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {Padlet} from "./padlet";
 @Injectable({
   providedIn: 'root'
 })

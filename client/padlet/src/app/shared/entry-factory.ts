@@ -1,4 +1,4 @@
-import {Entry} from "./padlet";
+import {Entry} from "./entry";
 import {User} from "./user";
 
 export class EntryFactory {

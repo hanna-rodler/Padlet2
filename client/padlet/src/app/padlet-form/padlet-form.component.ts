@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PadletFactory} from "../shared/padlet-factory";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PadletService} from "../shared/padlet.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PadletFormErrorMessages} from "./padlet-form-error-messages";
@@ -61,10 +61,7 @@ export class PadletFormComponent implements OnInit {
   }
 
   canCreatePrivatePadlets() {
-    if(this.authService.isLoggedIn()) {
-      return true;
-    }
-    else return false;
+    return this.authService.isLoggedIn();
   }
 
   submitForm() {

@@ -1,9 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input } from '@angular/core';
 import {Entry, Rating} from "../shared/entry";
-import {EntryFactory} from "../shared/entry-factory";
 import {EntryService} from "../shared/entry.service";
 import {ToastrService} from "ngx-toastr";
-import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {RatingService} from "../shared/rating.service";
 import {AuthenticationService} from "../shared/authentication.service";
 import {PadletRouterService} from "../shared/padlet-router.service";
@@ -33,8 +32,7 @@ export class EntryComponent {
   getRating(ratings: Array<Rating> | undefined ): number {
     if (ratings !== undefined && ratings.length > 0) {
       const sum = ratings.reduce((total, rating) => total + rating.stars, 0);
-      const avg = Number((sum / ratings.length).toFixed(2));
-      return avg;
+      return Number((sum / ratings.length).toFixed(2));
     } else return 0;
   }
 
@@ -63,14 +61,9 @@ export class EntryComponent {
   addEntryId(id: number | undefined) {
     if(id !== undefined) {
       sessionStorage.setItem('entryId', id.toString());
-      // TODO: aktuelle User Id nehmen.
       const user = this.authService.getCurrentUserId();
       this.ratingService.ratingExists(id.toString(), user).subscribe(res => {
-        if(res.length === 0){
-          this.ratingExists = false;
-        } else {
-          this.ratingExists = true;
-        }
+        this.ratingExists = res.length !== 0;
       });
     }
   }

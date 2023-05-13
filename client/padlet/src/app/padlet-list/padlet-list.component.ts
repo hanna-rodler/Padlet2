@@ -1,6 +1,5 @@
 import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import { Padlet} from "../shared/padlet";
-import {Entry, Comment, Rating} from "../shared/entry";
 import { PadletService } from "../shared/padlet.service";
 
 @Component({

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input } from '@angular/core';
 import {Rating} from "../shared/rating";
 
 @Component({
@@ -17,9 +17,10 @@ export class RatingComponent {
   }
 
   getRatingArray2(num: number | undefined) {
-    if (num !== undefined)
+    if (num !== undefined) {
       num = 5 - num;
       return new Array(num);
+    }
     return new Array(0);
   }
 

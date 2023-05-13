@@ -34,7 +34,7 @@ Route::post('/auth/logout', [AuthController::class, 'logout']);
 Route::get('/', [PadletController::class,  'publicList']);
 Route::get('/publicPadlets', [PadletController::class,  'publicList']);
 
-// TODO: get all public padlets and private padlets from specific user
+// TODO: get all private padlets and padlets that user is inivted to
 Route::get('/padlets/{id}', [PadletController::class, 'detail']);
 Route::post('/padlets', [PadletController::class, 'save']);
 Route::put('/padlets/{id}', [PadletController::class, 'update']);
