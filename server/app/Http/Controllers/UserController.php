@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Mockery\Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
@@ -20,6 +23,8 @@ class UserController extends Controller
         DB::beginTransaction();
         try {
             $user = User::create($request->all());
+            $user->password = Hash::make($user->password);
+            $user->save();
             DB::commit();
             return response()->json($user, 201);
         } catch (Exception $e) {

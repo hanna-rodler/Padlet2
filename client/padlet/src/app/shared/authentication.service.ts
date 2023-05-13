@@ -52,7 +52,6 @@ export class AuthenticationService {
   public setSessionStorage(token:string) {
     sessionStorage.setItem("token", token);
     const decodedToken = jwt_decode(token) as Token;
-    console.log(decodedToken);
     sessionStorage.setItem("token", token);
     sessionStorage.setItem("userId", decodedToken.user.id);
   }

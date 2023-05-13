@@ -1,7 +1,7 @@
 <form action="" class="ui form" [formGroup]="ratingForm" (ngSubmit)="submitForm()">
   <input type="hidden" formControlName="rating_id">
   <div class="inline field">
-    <label>Rating</label>
+    <label>My rating: </label>
     <input formControlName="stars">
     <div *ngIf="errors['stars']" class="ui negative message">
       {{errors['stars']}}

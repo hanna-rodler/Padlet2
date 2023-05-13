@@ -13,7 +13,7 @@
       <label>make padlet public</label>
     </div>
   </div>-->
-  <label>
+  <label *ngIf="canCreatePrivatePadlets()">
     <input type="checkbox" formControlName="isPublic">
     Make padlet public
   </label>

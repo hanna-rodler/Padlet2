@@ -5,6 +5,8 @@ import {EntryService} from "../shared/entry.service";
 import {ToastrService} from "ngx-toastr";
 import {ActivatedRoute, NavigationExtras, Router} from "@angular/router";
 import {RatingService} from "../shared/rating.service";
+import {AuthenticationService} from "../shared/authentication.service";
+import {PadletRouterService} from "../shared/padlet-router.service";
 
 @Component({
   selector: 'div.bs-entry',
@@ -21,8 +23,11 @@ export class EntryComponent {
   constructor(private entryService: EntryService,
               private ratingService: RatingService,
               private toastr: ToastrService,
+              private authService: AuthenticationService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private padletRouterServ: PadletRouterService
+              ) {
   }
 
   getRating(ratings: Array<Rating> | undefined ): number {
@@ -44,13 +49,7 @@ export class EntryComponent {
     if (confirm('Do you really want to delete the entry?')) {
       if (id !== undefined) {
         this.entryService.delete(id).subscribe(res => {
-          window.location.reload();
-          /*let currentUrl = this.router.url;
-          let navigationExtras: NavigationExtras = {
-            skipLocationChange: true
-          };
-          this.router.navigateByUrl(currentUrl);*/
-
+          this.padletRouterServ.redirectTo(this.router.url);
           this.toastr.success("The Entry was successfully deleted", "Deleted");}
         )
       }
@@ -65,7 +64,8 @@ export class EntryComponent {
     if(id !== undefined) {
       sessionStorage.setItem('entryId', id.toString());
       // TODO: aktuelle User Id nehmen.
-      this.ratingService.ratingExists(id.toString(), 1).subscribe(res => {
+      const user = this.authService.getCurrentUserId();
+      this.ratingService.ratingExists(id.toString(), user).subscribe(res => {
         if(res.length === 0){
           this.ratingExists = false;
         } else {

@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {PadletFactory} from "../shared/padlet-factory";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CommentFactory} from "../shared/comment-factory";
 import {CommentFormErrorMessages} from "./comment-form-error-messages";
 import {CommentService} from "../shared/comment.service";
+import {AuthenticationService} from "../shared/authentication.service";
+import {PadletRouterService} from "../shared/padlet-router.service";
 
 @Component({
   selector: 'bs-comment-form',
@@ -22,6 +24,9 @@ export class CommentFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private commentService: CommentService,
               private route: ActivatedRoute,
+              private authService: AuthenticationService,
+              private router: Router,
+              private padletRouterServ: PadletRouterService
   ) {
     this.commentForm = this.fb.group({});
   }
@@ -54,15 +59,13 @@ export class CommentFormComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.commentForm.value);
     const comment = this.commentForm.value;
-    // TODO: user
-    comment.user_id = 2;
+    comment.user_id = this.authService.getCurrentUserId();
     comment.entry_id = sessionStorage.getItem('entryId');
     this.commentService.create(comment).subscribe(res => {
       this.comment = CommentFactory.empty();
       this.commentForm.reset(CommentFactory.empty());
-      window.location.reload();
+      this.padletRouterServ.redirectTo(this.router.url);
     })
   }
 }

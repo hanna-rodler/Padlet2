@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Rating} from "../shared/rating";
 import {PadletFactory} from "../shared/padlet-factory";
 import {ToastrModule, ToastrService} from "ngx-toastr";
+import {AuthenticationService} from "../shared/authentication.service";
 
 @Component({
   selector: 'bs-padlet-detail',
@@ -21,7 +22,8 @@ export class PadletDetailComponent implements OnInit{
     private padletService: PadletService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthenticationService
   ) {
   }
 
@@ -51,9 +53,12 @@ export class PadletDetailComponent implements OnInit{
     if (confirm('Do you really want to delete the padlet?')) {
       if (id !== undefined) {
         this.padletService.delete(id).subscribe(res => {
-          /*this.router.navigate(['../'],
-            {relativeTo: this.route});*/
-          this.router.navigate(['../../padlets'],
+          let padletView = '/publicPadlets';
+          let regExPrivateView = /\/privatePadlets\/\d+/;
+          if(regExPrivateView.test(this.router.url) && this.authService.isLoggedIn()) {
+            padletView = '/privatePadlets';
+          }
+          this.router.navigate(['../../'+padletView],
             {relativeTo: this.route});
           this.toastr.success("The Entry was successfully deleted", "Deleted");}
         )

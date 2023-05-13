@@ -12,7 +12,6 @@ export class RatingService {
   constructor(private http:HttpClient) { }
 
   create(rating: Rating): Observable<any> {
-    console.log('create rating', rating);
     return this.http.post(`${this.api}/ratings`, rating).pipe(retry(3))
       .pipe(catchError(this.errorHandler));
   }

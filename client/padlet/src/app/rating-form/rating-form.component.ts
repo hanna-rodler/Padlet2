@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {RatingService} from "../shared/rating.service";
 import {RatingFactory} from "../shared/rating-factory";
 import {RatingFormErrorMessages} from "./rating-form-error-messages";
+import {AuthenticationService} from "../shared/authentication.service";
+import {PadletRouterService} from "../shared/padlet-router.service";
 
 @Component({
   selector: 'bs-rating-form',
@@ -21,15 +23,18 @@ export class RatingFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private ratingService: RatingService,
               private route: ActivatedRoute,
+              private router: Router,
+              private authService: AuthenticationService,
+              private padletRouterServ: PadletRouterService,
   ) {
     this.ratingForm = this.fb.group({});
   }
 
   ngOnInit() {
-    this.initPadlet();
+    this.initRating();
   }
 
-  initPadlet() {
+  initRating() {
     // TODO Achtung rating_id
     this.ratingForm = this.fb.group({
       rating_id: 0,
@@ -54,15 +59,12 @@ export class RatingFormComponent implements OnInit {
 
   submitForm() {
     const rating = this.ratingForm.value;
-    // TODO: user
-    rating.user_id = 1;
+    rating.user_id = this.authService.getCurrentUserId();
     rating.entry_id = sessionStorage.getItem('entryId');
-    console.log(rating);
     this.ratingService.create(rating).subscribe(res => {
-      console.log('Result', res);
       this.rating = RatingFactory.empty();
       this.ratingForm.reset(RatingFactory.empty());
-      window.location.reload();
+      this.padletRouterServ.redirectTo(this.router.url);
     })
   }
 }

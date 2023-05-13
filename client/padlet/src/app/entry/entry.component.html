@@ -74,6 +74,7 @@
       </div>
     </div>
     <bs-rating-form *ngIf="!ratingExists"></bs-rating-form>
+    <div *ngIf="ratingExists" style="margin-top: 1rem;"><i class="info icon"></i>You already rated this entry.</div>
 <!--    <div *ngIf="ratingExists">You already added a rating.</div>-->
   </div>
   <m-modal-footer>

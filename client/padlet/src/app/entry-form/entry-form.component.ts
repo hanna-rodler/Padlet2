@@ -81,7 +81,7 @@ export class EntryFormComponent implements OnInit {
     if (this.authService.isLoggedIn()){
       entry.user_id = this.authService.getCurrentUserId();
     } else {
-      entry.user_id = 2;
+      entry.user_id = 0;
     }
     if (this.isEditingEntry) {
       this.entryService.update(entry).subscribe(res => {
@@ -101,10 +101,5 @@ export class EntryFormComponent implements OnInit {
   redirectTo(uri: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
       this.router.navigate([uri]));
-  }
-
-  reload() {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigate([this.router.url]));
   }
 }

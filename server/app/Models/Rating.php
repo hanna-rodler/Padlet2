@@ -20,11 +20,4 @@ class Rating extends Model
     public function entry(): BelongsTo {
         return $this->belongsTo(Entry::class);
     }
-
-    public function ratingExists($entryId, $userId):bool{
-        // TODO: smart like this?
-        $rating = $this->where('entry_id', $entryId)->where('user_id',
-            $userId)->get();
-        return $rating != null;
-    }
 }

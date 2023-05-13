@@ -34,9 +34,13 @@ export class PadletFormComponent implements OnInit {
   }
 
   initPadlet() {
+    let isPublic = false;
+    if(this.router.url === '/publicPadlets') {
+      isPublic = true;
+    }
     this.padletForm = this.fb.group({
       name: [this.padlet.name, Validators.required],
-      isPublic: this.padlet.isPublic,
+      isPublic: isPublic,
       id: this.padlet.id,
     });
     this.padletForm.statusChanges.subscribe(() => {
@@ -56,16 +60,29 @@ export class PadletFormComponent implements OnInit {
     }
   }
 
+  canCreatePrivatePadlets() {
+    if(this.authService.isLoggedIn()) {
+      return true;
+    }
+    else return false;
+  }
+
   submitForm() {
     const padlet:Padlet = PadletFactory.fromObject(this.padletForm.value);
     if (this.authService.isLoggedIn()){
       padlet.user_id = this.authService.getCurrentUserId();
     } else {
       padlet.isPublic = true;
-      padlet.user_id = 2;
+      // Anonymus user has id 0
+      padlet.user_id = 0;
     }
     this.padletService.create(padlet).subscribe(res => {
-      this.router.navigate(['../padlets/'+res.id],
+      // redirect user to either padlet or privatePadlet overview
+      let padletView = '/publicPadlets'
+      if(this.router.url === '/privatePadlets' && !padlet.isPublic && this.authService.isLoggedIn()) {
+        padletView = '/privatePadlets';
+      }
+      this.router.navigate(['..'+padletView+'/'+res.id],
         {relativeTo: this.route});
       this.padlet = PadletFactory.empty();
       this.padletForm.reset(PadletFactory.empty());
