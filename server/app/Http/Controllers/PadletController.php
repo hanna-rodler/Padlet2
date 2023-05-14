@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
-use App\Models\Entry;
 use App\Models\Padlet;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
@@ -34,6 +32,21 @@ class PadletController extends Controller
         'entries.ratings', 'user', 'entries.user')
             ->get();
         return response()->json($padlets, 200);
+    }
+
+    public function privateAndInvitedPadlets($userId) {
+        $padlets = Padlet::where(function($query) use ($userId) {
+            $query->where('user_id', $userId)->where('isPublic', false);
+        })->orWhereExists(function($query) use ($userId) {
+            $query->select(DB::raw(1))
+                ->from('rights')
+                ->where('rights.user_id', $userId)
+                ->where('rights.isInvitationAccepted', true)
+                ->whereRaw('rights.padlet_id = padlets.id');
+        })->with('entries.comments', 'entries.ratings', 'user', 'entries.user')
+          ->get();
+        return $padlets !== null ? response()->json($padlets, 200) :
+            response()->json(null, 200);
     }
 
     public function privateList2(){

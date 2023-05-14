@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
     return view('welcome');
 });*/
 
-Route::get('/', [PadletController::class,  'publicList']);
+/*Route::get('/', [PadletController::class,  'publicList']);
 Route::get('/publicPadlets', [PadletController::class,  'publicList']);
 
 // TODO: get all public padlets and private padlets from specific user
@@ -31,4 +31,7 @@ Route::get('/padlets', [PadletController::class, 'privateList']);
 Route::get('/padlets/{id}', [PadletController::class, 'detail']);
 Route::get('/padlets/{id}/saveEntry', [EntryController::class, 'save']);
 Route::get('/padlets/saveRating', [RatingController::class, 'save']);
+
+Route::get('/specific/${userId}', [PadletController::class, 'privateAndInvitedPadlets']);*/
+
 

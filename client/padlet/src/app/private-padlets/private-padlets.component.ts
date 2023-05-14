@@ -21,7 +21,7 @@ export class PrivatePadletsComponent implements OnInit {
   ngOnInit() {
     const userId = this.authService.getCurrentUserId();
     this.padletService.getPrivatePadlets(userId).subscribe(
-      res => {this.padlets = res}
+      res => {this.padlets = res;}
     );
   }
 

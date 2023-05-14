@@ -50,7 +50,7 @@ export class PadletService {
   }
 
   getPrivatePadlets(userId: number): Observable<Array<Padlet>> {
-    return this.http.get<Array<Padlet>>(`${this.api}/padlets/private/${userId}`).
+    return this.http.get<Array<Padlet>>(`${this.api}/privateAndInvited/${userId}`).
     pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 

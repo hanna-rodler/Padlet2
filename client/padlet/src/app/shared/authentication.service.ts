@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import jwt_decode from "jwt-decode";
 import {HttpClient} from "@angular/common/http";
+import {UserService} from "./user.service";
 
 interface Token {
   exp: number;
@@ -15,12 +16,18 @@ interface Token {
 export class AuthenticationService {
   private api = 'http://padlet.s2010456026.student.kwmhgb.at/api/auth';
 
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient,
+              private userServ:UserService) {
 
   }
 
   login(email: string, password: string) {
     return this.http.post(`${this.api}/login`, {email: email, password: password});
+  }
+
+  me() {
+    const userId = this.getCurrentUserId();
+    return this.userServ.getUser(userId);
   }
 
   logout(){

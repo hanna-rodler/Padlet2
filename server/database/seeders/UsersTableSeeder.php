@@ -60,6 +60,7 @@ class UsersTableSeeder extends Seeder
             'firstname'=>'Johanna',
             'lastname'=>'Fürst',
             'email'=>'test@fuerst.com',
+            'image' => 'https://images.unsplash.com/photo-1606202376066-4bdc077c10b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE1fHx8ZW58MHx8fHw%3D&w=1000&q=80',
             'password'=>bcrypt('testFuerst'),
             'created_at'=>date("Y-m-d H:i:s"),
             'updated_at'=>date("Y-m-d H:i:s")
@@ -69,6 +70,7 @@ class UsersTableSeeder extends Seeder
             'firstname'=>'Wilhelmine',
             'lastname'=>'Schröder',
             'email'=>'test@schroeder.com',
+            'image'=>'https://www.warnermusic.de/uploads/media/800x/01/20471-Wilhelmine_Malli-57.jpg?v=1-4',
             'password'=>bcrypt('testSchroeder'),
             'created_at'=>date("Y-m-d H:i:s"),
             'updated_at'=>date("Y-m-d H:i:s")
@@ -78,6 +80,7 @@ class UsersTableSeeder extends Seeder
             'firstname'=>'Anonymus',
             'lastname'=>'Bird',
             'email'=>'test@bird.com',
+            'image' => 'https://live.staticflickr.com/2899/14418137058_8e27762192_z.jpg',
             'password'=>bcrypt('testBird')
         ]);
     }
