@@ -1,7 +1,7 @@
 <div class="ui container">
 
   <h1 class="ui header">{{ padlet.name }} <span *ngIf="!editingPadlet" style="margin-left: 1rem;"
-                                                (click)="editPadlet()"> <i class="pencil alternate icon"></i> </span>
+                                                (click)="editPadlet()"> <i *ngIf="permission === 'delete' || permission  === 'write' || isPadletOwner" class="pencil alternate icon"></i> </span>
   </h1>
   <div style="margin-bottom: 2rem;">by {{padlet.user.firstname}} {{padlet.user.lastname}}</div>
 
@@ -9,7 +9,7 @@
     <bs-edit-padlet-form></bs-edit-padlet-form>
   </div>
 
-  <div class="m-b-5" style="margin-bottom: 1.5rem;">
+  <div class="m-b-5" style="margin-bottom: 1.5rem;" *ngIf="permission !== 'read'">
     <button *ngIf="!addingEntry" class="ui orange labeled icon button" (click)="addEntry()">
       <i class="plus icon"></i>
       New Entry
@@ -18,7 +18,7 @@
       <i class="minus icon"></i>
       Cancel
     </button>
-    <button class="ui right labeled icon basic button  right floated" (click)="deletePadlet(padlet.id)">
+    <button *ngIf="permission === 'delete' || isPadletOwner" class="ui right labeled icon basic button  right floated" (click)="deletePadlet(padlet.id)">
       <i class="right black trash icon"></i>
       Delete Padlet
     </button>
@@ -28,11 +28,9 @@
     <bs-entry-form></bs-entry-form>
   </div>
 
-  <!--  TODO: editing and deleting -->
-
   <div *ngIf="padlet.entries && padlet.entries.length > 0"></div>
   <div class="ui four stackable cards">
-    <div class="card bs-entry" *ngFor="let entry of padlet.entries" [entry]="entry">
+    <div class="card bs-entry" *ngFor="let entry of padlet.entries" [entry]="entry" [permission]="getPermissions()">
     </div>
   </div>
 

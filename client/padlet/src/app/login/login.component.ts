@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit{
     if(val.username && val.password) {
       this.authService.login(val.username, val.password).subscribe((res:any) => {
         this.authService.setSessionStorage((res as Response).access_token);
-        this.router.navigate(["../privatePadlets"], {relativeTo: this.route})
+        this.router.navigate(["../home"], {relativeTo: this.route})
       })
     }
   }

@@ -1,4 +1,4 @@
-import {Component, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Entry, Rating} from "../shared/entry";
 import {EntryService} from "../shared/entry.service";
 import {ToastrService} from "ngx-toastr";
@@ -13,11 +13,15 @@ import {PadletRouterService} from "../shared/padlet-router.service";
   styles: [
   ]
 })
-export class EntryComponent {
+export class EntryComponent implements OnInit {
   @Input() entry: Entry | undefined;
+  @Input() permission: string | undefined;
+  // @Input() rights: Array<Right> | undefined;
   editingEntry:boolean = false;
   showModal:boolean = false;
   ratingExists:boolean = false;
+  canDelete = false;
+  isEntryOwner = false;
 
   constructor(private entryService: EntryService,
               private ratingService: RatingService,
@@ -27,6 +31,19 @@ export class EntryComponent {
               private route: ActivatedRoute,
               private padletRouterServ: PadletRouterService
               ) {
+  }
+
+  ngOnInit() {
+    if (this.entry !== undefined){
+      this.authService.me().subscribe(me => {
+        if(this.entry !== undefined) {
+          if (this.entry.user_id === me.id) {
+            console.log('is entry owner', this.entry.user_id, 'of ', this.entry.id);
+            this.isEntryOwner = true;
+          }
+        }
+      });
+    }
   }
 
   getRating(ratings: Array<Rating> | undefined ): number {

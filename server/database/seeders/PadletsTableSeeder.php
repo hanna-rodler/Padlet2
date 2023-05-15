@@ -20,6 +20,7 @@ class PadletsTableSeeder extends Seeder
         // users
         $user1 = User::find(1);
         $user2 = User::find(2);
+        $user4 = User::find(4);
 
         // Padlet 1
         $padlet1 = new Padlet();
@@ -41,6 +42,12 @@ class PadletsTableSeeder extends Seeder
         $padlet3->isPublic = false;
         $padlet3->user()->associate($user1);
         $padlet3->save();
+
+        $padlet4 = new Padlet();
+        $padlet4->name = 'Dating Ideas';
+        $padlet4->isPublic = false;
+        $padlet4->user()->associate($user4);
+        $padlet4->save();
 
         /*DB::table('padlets')->insert([
             'name' => 'My first padlet',

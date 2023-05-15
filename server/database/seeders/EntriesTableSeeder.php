@@ -21,10 +21,14 @@ class EntriesTableSeeder extends Seeder
         $padlet1 = Padlet::find(1);
         $padlet2 = Padlet::find(2);
         $padlet3 = Padlet::find(3);
+        $padlet4 = Padlet::find(4);
 
         // users
         $user1 = User::find(1);
         $user2 = User::find(2);
+        $user4 = User::find(4);
+        $user6 = User::find(6);
+        $user7 = User::find(7);
 
         // ENTRY 1
         $entry1 = new Entry();
@@ -50,5 +54,26 @@ class EntriesTableSeeder extends Seeder
         $entry3->padlet()->associate($padlet3);
         $entry3->user()->associate($user1);
         $entry3->save();
+
+        $entry4 = new Entry();
+        $entry4->title="Picnic in the park";
+        $entry4->text="Enjoy a beautiful day outside with your significant other by having a picnic in a nearby park. Bring a blanket, your favorite snacks, and maybe even some board games to make the most of your time together.";
+        $entry4->padlet()->associate($padlet4);
+        $entry4->user()->associate($user4);
+        $entry4->save();
+
+        $entry5 = new Entry();
+        $entry5->title="go swimming";
+        $entry5->text="In the lake or at a nearby pool";
+        $entry5->padlet()->associate($padlet4);
+        $entry5->user()->associate($user7);
+        $entry5->save();
+
+        $entry6 = new Entry();
+        $entry6->title="Wine and paint night";
+        $entry6->text="Take a class together where you can enjoy a glass of wine and learn how to paint. This is a great way to bond over a new experience and create something special to remember your date.";
+        $entry6->padlet()->associate($padlet4);
+        $entry6->user()->associate($user6);
+        $entry6->save();
     }
 }

@@ -14,13 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('rights', function (Blueprint $table) {
-            $table->id();
             $table->string('permission')->default('read');
             $table->boolean('isInvitationPending')->default(false);
-            $table->boolean('isInvitationAccepted')->nullable();
+            $table->boolean('isInvitationAccepted')->default(false);
 
             $table->foreignId('padlet_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+            $table->primary(['padlet_id', 'user_id']);
 
             $table->timestamps();
         });

@@ -12,6 +12,7 @@ import {AuthenticationService} from "../shared/authentication.service";
 export class PrivatePadletsComponent implements OnInit {
   padlets: Padlet[] = [];
   creatingPadlet = false;
+  permission = 'read';
 
   @Output() showDetailsEvent = new EventEmitter<Padlet>();
 

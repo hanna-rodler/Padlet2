@@ -33,4 +33,10 @@ class UserController extends Controller
                 $e->getMessage(), 420);
         }
     }
+
+    public function getUserByMail(string $email): JsonResponse {
+        $user = User::where('email', $email)->first();
+        return $user !== null ? response()->json($user, 200) :
+            response()->json(null, 200);
+    }
 }

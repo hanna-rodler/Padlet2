@@ -3,6 +3,8 @@ import {AuthenticationService} from "../shared/authentication.service";
 import {User} from "../shared/user";
 import {RightService} from "../shared/right.service";
 import {Right} from "../shared/right";
+import {PadletRouterService} from "../shared/padlet-router.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'bs-home',
@@ -16,7 +18,9 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private authServ: AuthenticationService,
-    private rightServ: RightService
+    private rightServ: RightService,
+    private router: Router,
+    private padletRouterServ: PadletRouterService
   ) {
   }
 
@@ -32,6 +36,7 @@ export class HomeComponent implements OnInit {
         if(this.user !== undefined && this.user.id !== undefined) {
           this.rightServ.getPendingInvitations(this.user.id).subscribe(res => {
             this.invitations = res;
+            console.log(this.invitations);
           });
         }
       }
@@ -40,5 +45,19 @@ export class HomeComponent implements OnInit {
 
   isLoggedIn() {
     return this.authServ.isLoggedIn();
+  }
+
+  acceptInvite(invitation: any) {
+    console.log('accepting invite ', invitation);
+    this.rightServ.acceptInvitation(invitation).subscribe(res => {
+      this.padletRouterServ.redirectTo(this.router.url);
+    })
+  }
+
+  declineInvite(invitation: Right) {
+    this.rightServ.declineInvitation(invitation).subscribe(res => {
+      // console.log(res);
+      this.padletRouterServ.redirectTo(this.router.url);
+    });
   }
 }

@@ -83,5 +83,21 @@ class UsersTableSeeder extends Seeder
             'image' => 'https://live.staticflickr.com/2899/14418137058_8e27762192_z.jpg',
             'password'=>bcrypt('testBird')
         ]);
+
+        DB::table('users')->insert([
+            'firstname'=>'Aneta',
+            'lastname'=>'Solarikova',
+            'email'=>'test@solarikova.com',
+            'image' => 'https://t1.ea.ltmcdn.com/en/posts/5/8/0/dietary_habits_of_the_toucan_85_600.jpg',
+            'password'=>bcrypt('testSolarikova')
+        ]);
+
+        DB::table('users')->insert([
+            'firstname'=>'Hanna',
+            'lastname'=>'Rodler',
+            'email'=>'test@rodler.com',
+            'image' => 'https://australianparrots.files.wordpress.com/2008/09/cockysquare.jpg',
+            'password'=>bcrypt('testRodler')
+        ]);
     }
 }

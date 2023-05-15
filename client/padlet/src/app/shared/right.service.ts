@@ -13,11 +13,31 @@ export class RightService {
               ) { }
 
   getPendingInvitations(userId:number): Observable<any> {
-    return this.http.get(`${this.api}/invitation/${userId}`)
+    return this.http.get(`${this.api}/pendingInvitations/${userId}`)
     .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   private errorHandler(error: Error | any): Observable<any> {
     return throwError(error);
+  }
+
+  invite(invitation: Right): Observable<any> {
+    return this.http.post(`${this.api}/invite`, invitation).pipe(retry(3))
+      .pipe(catchError(this.errorHandler));
+  }
+
+  acceptInvitation(invitation: any): Observable<any> {
+    return this.http.put(`${this.api}/acceptInvitation/${invitation.user_id}/${invitation.padlet_id}`, invitation).pipe(retry(3))
+      .pipe(catchError(this.errorHandler));
+  }
+
+  updateRight(invitation: Right) {
+    return this.http.put(`${this.api}/invitations/${invitation.user_id}/${invitation.padlet_id}`, invitation).pipe(retry(3))
+      .pipe(catchError(this.errorHandler));
+  }
+
+  declineInvitation(invitation: any): Observable<any> {
+    return this.http.put(`${this.api}/declineInvitation/${invitation.user_id}/${invitation.padlet_id}`, invitation).pipe(retry(3))
+      .pipe(catchError(this.errorHandler));
   }
 }

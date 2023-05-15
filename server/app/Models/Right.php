@@ -10,7 +10,7 @@ class Right extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['permission', 'isInvitationAccepted',
+    protected $fillable = ['permission', 'isInvitationPending', 'isInvitationAccepted',
         'padlet_id', 'user_id'];
 
     public function padlet(): BelongsTo {

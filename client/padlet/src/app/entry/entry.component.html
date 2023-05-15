@@ -1,4 +1,4 @@
-<div class="content modalCard" (click)="showModal = true; addEntryId(entry?.id)">
+<div class="content modalCard" (click)="showModal = true; addEntryId(entry?.id);">
   <img *ngIf="entry?.user?.image" class="right floated avatar" [src]="entry?.user?.image">
   <img *ngIf="!entry?.user?.image" class="right floated avatar"
        src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
@@ -25,7 +25,7 @@
 </div>
 
 
-<m-modal *ngIf="showModal" (close)="showModal = false; removeEntryId()">
+<m-modal *ngIf="showModal" (close)="showModal = false; removeEntryId();">
   <m-modal-header>
     {{ entry?.title }}
   </m-modal-header>
@@ -34,12 +34,12 @@
       <div class="column">by {{entry?.user?.firstname}} {{entry?.user?.lastname}}</div>
       <div class="column"></div>
       <div class="column">
-        <span class="right floated" (click)="editEntry()">
+        <span *ngIf="permission === 'delete' || permission === 'write' || isEntryOwner" class="right floated" (click)="editEntry()">
           <i class="pencil alternate icon"></i>
         </span>
       </div>
       <div class="column">
-        <span class="right floated" (click)="deleteEntry(entry?.id)">
+        <span *ngIf="permission === 'delete' || isEntryOwner" class="right floated" (click)="deleteEntry(entry?.id)">
           <i class="trash icon"></i>
         </span>
       </div>
@@ -65,7 +65,7 @@
       <div class="bs-comment" *ngFor="let comment of entry?.comments" [comment]="comment">
     </div>
     </div>
-    <bs-comment-form></bs-comment-form>
+    <bs-comment-form *ngIf="permission !== 'read'"></bs-comment-form>
   </div>
   <div class="ui comments" style="margin-top: 3rem;">
     <h3 class="ui dividing header">Ratings</h3>
@@ -73,7 +73,7 @@
       <div class="bs-rating" *ngFor="let rating of entry?.ratings" [rating]="rating">
       </div>
     </div>
-    <bs-rating-form *ngIf="!ratingExists"></bs-rating-form>
+    <bs-rating-form *ngIf="!ratingExists && permission !== 'read'"></bs-rating-form>
     <div *ngIf="ratingExists" style="margin-top: 1rem;"><i class="info icon"></i>You already rated this entry.</div>
 <!--    <div *ngIf="ratingExists">You already added a rating.</div>-->
   </div>

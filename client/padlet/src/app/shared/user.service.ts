@@ -19,4 +19,9 @@ export class UserService {
   private errorHandler(error: Error | any): Observable<any> {
     return throwError(error);
   }
+
+  getUserByEmail(email: string): Observable<User> {
+    return this.http.get<User>(`${this.api}/users/mail/${email}`).
+    pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
 }

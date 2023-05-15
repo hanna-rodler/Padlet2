@@ -7,19 +7,36 @@
       {{errors['name']}}
     </div>
   </div>
-  <!--<div class="inline field">
-    <div>
-      <input type="checkbox" tabindex="0" class="hidden">
-      <label>make padlet public</label>
-    </div>
-  </div>-->
   <label *ngIf="canCreatePrivatePadlets()">
     <input type="checkbox" formControlName="isPublic">
     Make padlet public
   </label>
+
 <!--  TODO: public / private -->
   <!--  TODO Rechteverwaltung -->
   <br>
+  <div formArrayName="invitees">
+    <div *ngFor="let invitee of invitees.controls; index as i; last as l" [formGroupName]="i">
+        <div class="field">
+          <label> Email</label>
+            <input type="email" formControlName="email" />
+        </div>
+        <label>
+          Permission:
+          <select formControlName="permission">
+            <option value="read">Read</option>
+            <option value="write">Write</option>
+            <option value="create">Create</option>
+            <option value="delete">Delete</option>
+          </select>
+        </label>
+        <button type="ui button" (click)="removeInvitee(i)">Remove</button>
+      </div>
+  </div>
+
+  <button type="button" (click)="addInvitee()">Add Invitee</button>
+  <button type="submit">Invite</button>
+
   <button type="submit" class="ui button"
           [disabled]="padletForm.invalid">Save</button>
 </form>

@@ -1,11 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {PadletFactory} from "../shared/padlet-factory";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {PadletService} from "../shared/padlet.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PadletFormErrorMessages} from "./padlet-form-error-messages";
 import {Padlet} from "../shared/padlet";
 import {AuthenticationService} from "../shared/authentication.service";
+import {RightService} from "../shared/right.service";
+import {Right} from "../shared/right";
+import {UserService} from "../shared/user.service";
 
 @Component({
   selector: 'bs-padlet-form',
@@ -13,20 +16,25 @@ import {AuthenticationService} from "../shared/authentication.service";
   styles: [
   ]
 })
+
 export class PadletFormComponent implements OnInit {
   padlet = PadletFactory.empty();
 
   padletForm: FormGroup;
 
   errors: {[key:string]:string} = {};
+  invitees: FormArray;
 
   constructor(private fb: FormBuilder,
               private padletService: PadletService,
               private route: ActivatedRoute,
               private router: Router,
               private authService: AuthenticationService,
+              private rightsService : RightService,
+              private userService: UserService
   ) {
     this.padletForm = this.fb.group({});
+    this.invitees = this.fb.array([]);
   }
 
   ngOnInit() {
@@ -34,6 +42,8 @@ export class PadletFormComponent implements OnInit {
   }
 
   initPadlet() {
+    this.buildInviteesArray();
+
     let isPublic = false;
     if(this.router.url === '/publicPadlets') {
       isPublic = true;
@@ -42,10 +52,20 @@ export class PadletFormComponent implements OnInit {
       name: [this.padlet.name, Validators.required],
       isPublic: isPublic,
       id: this.padlet.id,
+      invitees: this.invitees
     });
-    this.padletForm.statusChanges.subscribe(() => {
+    this.padletForm.statusChanges.subscribe((res) => {
       this.updateErrorMessages();
     })
+  }
+
+  buildInviteesArray(){
+    let fg = this.fb.group({
+      id: new FormControl (0),
+      email: new FormControl ('', [Validators.required, Validators.email]),
+      permission: new FormControl('read', Validators.required)
+    });
+    this.invitees.push(fg);
   }
 
   updateErrorMessages() {
@@ -64,6 +84,19 @@ export class PadletFormComponent implements OnInit {
     return this.authService.isLoggedIn();
   }
 
+  addInvitee() {
+    this.invitees.push(this.fb.group({
+        id: 0,
+        email: ['', [Validators.required, Validators.email]],
+        permission: ['read', Validators.required],
+      })
+    );
+  }
+
+  removeInvitee(index: number): void {
+    this.invitees.removeAt(index);
+  }
+
   submitForm() {
     const padlet:Padlet = PadletFactory.fromObject(this.padletForm.value);
     if (this.authService.isLoggedIn()){
@@ -73,6 +106,8 @@ export class PadletFormComponent implements OnInit {
       // Anonymus user has id 0
       padlet.user_id = 0;
     }
+    // padlet.invitees = this.invitees.value;
+    // console.log(this.invitees.value);
     this.padletService.create(padlet).subscribe(res => {
       // redirect user to either padlet or privatePadlet overview
       let padletView = '/publicPadlets'
@@ -81,8 +116,16 @@ export class PadletFormComponent implements OnInit {
       }
       this.router.navigate(['..'+padletView+'/'+res.id],
         {relativeTo: this.route});
-      this.padlet = PadletFactory.empty();
-      this.padletForm.reset(PadletFactory.empty());
+
+      this.padletForm.value.invitees.forEach((invitee: any) => {
+        this.userService.getUserByEmail(invitee.email).subscribe(user => {
+          const right = new Right(invitee.permission, true, false, res.id, user.id)
+          this.rightsService.invite(right).subscribe(res => {
+            this.padlet = PadletFactory.empty();
+            this.padletForm.reset(PadletFactory.empty());
+          })
+        });
+      })
     });
   }
 }

@@ -43,9 +43,14 @@ Route::put('/entries/{id}', [EntryController::class, 'update']);
 Route::delete('/entries/{id}', [EntryController::class, 'delete']);
 Route::post('/entries', [EntryController::class, 'save']);
 
-Route::post('/invite', [RightController::class,
-    'invite']);
-Route::get('/invitation/{userId}', [RightController::class, 'userInvitations']);
+Route::get('/pendingInvitations/{userId}', [RightController::class, 'pendingInvitations']);
+Route::get('/nonPendingInvitations/{userId}', [RightController::class, 'nonPendingInvitations']);
+Route::post('/invite', [RightController::class, 'invite']);
+Route::put('/invitations/{userId}/{padletId}', [RightController::class, 'updateRight']);
+Route::put('/acceptInvitation/{userId}/{padletId}', [RightController::class,
+    'acceptInvitation']);
+Route::put('/declineInvitation/{userId}/{padletId}', [RightController::class,
+    'declineInvitation']);
 
 
 Route::post('/comments/{id}', [CommentController::class, 'save']);
@@ -55,6 +60,7 @@ Route::post('/ratings', [RatingController::class, 'save']);
 
 
 Route::get('/users/{id}', [UserController::class, 'getUser']);
+Route::get('/users/mail/{mail}', [UserController::class, 'getUserByMail']);
 Route::post('/register', [UserController::class, 'register']);
 
 
