@@ -27,7 +27,12 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@mantic-ui/semantic-ui-angular/assets",
+                "output": "/assets/"
+              }
             ],
             "styles": [
               "node_modules/semantic-ui-css/semantic.css",

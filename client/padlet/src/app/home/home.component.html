@@ -1,31 +1,32 @@
-<div *ngIf="isLoggedIn()">
-  <h1>Hello {{user?.firstname}}, welcome back</h1>
+<div class="ui container">
+  <div *ngIf="isLoggedIn()">
+    <h1>Hello {{user?.firstname}}, welcome back</h1>
 
-</div>
+  </div>
 
-<h2 *ngIf="invitations && invitations.length">Pending Invitations:</h2>
-<div class="ui cards">
-  <div *ngFor="let invitation of invitations" class="card">
-      <div class="content">
-        <img class="right floated avatar ui image" [src]="invitation.padlet?.user?.image">
-        <div class="header">
-          {{ invitation.padlet?.name }}
+  <h2 *ngIf="invitations && invitations.length">Pending Invitations:</h2>
+  <div class="ui cards">
+    <div *ngFor="let invitation of invitations" class="card">
+        <div class="content">
+          <img class="right floated avatar ui image" [src]="invitation.padlet?.user?.image">
+          <div class="header">
+            {{ invitation.padlet?.name }}
+          </div>
+          <div class="meta">
+            Come join my padlet!
+          </div>
+          <div class="description">
+            <b>{{ invitation.padlet?.user?.firstname }} {{ invitation.padlet?.user?.lastname }}</b> is inviting you to join the padlet "{{ invitation.padlet?.name }}"
+          </div>
         </div>
-        <div class="meta">
-          Come join my padlet!
-        </div>
-        <div class="description">
-          <b>{{ invitation.padlet?.user?.firstname }} {{ invitation.padlet?.user?.lastname }}</b> is inviting you to join the padlet "{{ invitation.padlet?.name }}"
+        <div class="extra content">
+          <div class="ui two buttons">
+            <div class="ui basic green button" (click)="acceptInvite(invitation)">Accept</div>
+            <div class="ui basic red button" (click)="declineInvite(invitation)">Decline</div>
+          </div>
         </div>
       </div>
-      <div class="extra content">
-        <div class="ui two buttons">
-          <div class="ui basic green button" (click)="acceptInvite(invitation)">Accept</div>
-          <div class="ui basic red button" (click)="declineInvite(invitation)">Decline</div>
-        </div>
-      </div>
-    </div>
+  </div>
 </div>
-
 
 

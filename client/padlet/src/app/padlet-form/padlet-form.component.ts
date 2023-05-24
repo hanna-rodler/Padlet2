@@ -9,6 +9,7 @@ import {AuthenticationService} from "../shared/authentication.service";
 import {RightService} from "../shared/right.service";
 import {Right} from "../shared/right";
 import {UserService} from "../shared/user.service";
+import {PadletRouterService} from "../shared/padlet-router.service";
 
 @Component({
   selector: 'bs-padlet-form',
@@ -24,6 +25,9 @@ export class PadletFormComponent implements OnInit {
 
   errors: {[key:string]:string} = {};
   invitees: FormArray;
+  isUpdating: boolean = false;
+  isPadletOwner: boolean = false;
+
 
   constructor(private fb: FormBuilder,
               private padletService: PadletService,
@@ -31,13 +35,27 @@ export class PadletFormComponent implements OnInit {
               private router: Router,
               private authService: AuthenticationService,
               private rightsService : RightService,
-              private userService: UserService
+              private userService: UserService,
+              private padletRouterServ: PadletRouterService,
   ) {
     this.padletForm = this.fb.group({});
-    this.invitees = this.fb.array([]);
+    this.invitees = this.fb.array([])
   }
 
   ngOnInit() {
+    const id:number = this.route.snapshot.params['id'];
+    if(id !== undefined) {
+      this.isUpdating = true;
+      this.padletService.getSingle(id.toString()).subscribe(
+        padlet => {
+          this.padlet = padlet;
+          this.padlet.id = id;
+          console.log(this.padlet);
+          this.initPadlet();
+          this.checkPadletOwner();
+        }
+      );
+    }
     this.initPadlet();
   }
 
@@ -49,9 +67,9 @@ export class PadletFormComponent implements OnInit {
       isPublic = true;
     }
     this.padletForm = this.fb.group({
+      id: this.padlet.id,
       name: [this.padlet.name, Validators.required],
       isPublic: isPublic,
-      id: this.padlet.id,
       invitees: this.invitees
     });
     this.padletForm.statusChanges.subscribe((res) => {
@@ -59,13 +77,41 @@ export class PadletFormComponent implements OnInit {
     })
   }
 
-  buildInviteesArray(){
-    let fg = this.fb.group({
-      id: new FormControl (0),
-      email: new FormControl ('', [Validators.required, Validators.email]),
-      permission: new FormControl('read', Validators.required)
+  checkPadletOwner(){
+    this.authService.me().subscribe(me => {
+      if (this.padlet.user_id == me.id) {
+        console.log('is Padlet owner');
+        this.isPadletOwner = true;
+      }
     });
-    this.invitees.push(fg);
+  }
+
+  buildInviteesArray(){
+    console.log('building invitees array');
+    if(this.padlet.rights) {
+      console.log('getting rights');
+      this.invitees = this.fb.array([]);
+      for (let right of this.padlet.rights) {
+        if(right.user !== undefined) {
+          console.log(right.user);
+          let fg = this.fb.group({
+            id: right.user_id,
+            email: [right.user.email, [Validators.email]],
+            permission: [right.permission],
+            isInvitationPending: right.isInvitationPending,
+            isInvitationAccepted: right.isInvitationAccepted
+          });
+          this.invitees.push(fg);
+        }
+      }
+    } else {
+      let fg = this.fb.group({
+        id: new FormControl (0),
+        email: new FormControl ('', [Validators.email]),
+        permission: new FormControl('read')
+      });
+      this.invitees.push(fg);
+    }
   }
 
   updateErrorMessages() {
@@ -87,7 +133,7 @@ export class PadletFormComponent implements OnInit {
   addInvitee() {
     this.invitees.push(this.fb.group({
         id: 0,
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.email]],
         permission: ['read', Validators.required],
       })
     );
@@ -98,35 +144,64 @@ export class PadletFormComponent implements OnInit {
   }
 
   submitForm() {
-    const padlet:Padlet = PadletFactory.fromObject(this.padletForm.value);
-    if (this.authService.isLoggedIn()){
-      padlet.user_id = this.authService.getCurrentUserId();
-    } else {
-      padlet.isPublic = true;
-      // Anonymus user has id 0
-      padlet.user_id = 0;
-    }
-    // padlet.invitees = this.invitees.value;
-    // console.log(this.invitees.value);
-    this.padletService.create(padlet).subscribe(res => {
-      // redirect user to either padlet or privatePadlet overview
-      let padletView = '/publicPadlets'
-      if(this.router.url === '/privatePadlets' && !padlet.isPublic && this.authService.isLoggedIn()) {
-        padletView = '/privatePadlets';
-      }
-      this.router.navigate(['..'+padletView+'/'+res.id],
-        {relativeTo: this.route});
+    this.padletForm.value.invitees = this.padletForm.value.invitees.filter(
+      (invitee: {email:string}) => invitee.email !== ''
+    );
+    console.log('invitees', this.padletForm.value.invitees);
 
-      this.padletForm.value.invitees.forEach((invitee: any) => {
-        this.userService.getUserByEmail(invitee.email).subscribe(user => {
-          const right = new Right(invitee.permission, true, false, res.id, user.id)
-          this.rightsService.invite(right).subscribe(res => {
-            this.padlet = PadletFactory.empty();
-            this.padletForm.reset(PadletFactory.empty());
-          })
-        });
+
+
+    if(this.isUpdating) {
+      const padlet:Padlet = PadletFactory.fromObject(this.padletForm.value);
+      this.padletService.update(padlet).subscribe(res => {
+        console.log(res);
+        this.padletForm.value.invitees.forEach((invitee: any) => {
+          this.userService.getUserByEmail(invitee.email).subscribe(user => {
+            console.log(invitee.isInvitationPending);
+            const isInvitationPending = invitee.isInvitationPending !== undefined ? invitee.isInvitationPending : true;
+            const isInvitationAccepted = invitee.isInvitationAccepted !== undefined ? invitee.isInvitationAccepted : false;
+            const right = new Right(invitee.permission, isInvitationPending, isInvitationAccepted, padlet.id, user.id)
+            this.rightsService.invite(right).subscribe(res => {
+              this.padlet = PadletFactory.empty();
+              this.padletForm.reset(PadletFactory.empty());
+            })
+          });
+        })
+        this.padletRouterServ.redirectTo(this.router.url);
       })
-    });
+    } else {
+      const padlet:Padlet = PadletFactory.fromObject(this.padletForm.value);
+      if (this.authService.isLoggedIn()){
+        padlet.user_id = this.authService.getCurrentUserId();
+      } else {
+        padlet.isPublic = true;
+        // Anonymus user has id 0
+        padlet.user_id = 0;
+      }
+      this.padletService.create(padlet).subscribe(res => {
+        // redirect user to either padlet or privatePadlet overview
+        let padletView = '/publicPadlets'
+        if(this.router.url === '/privatePadlets' && !padlet.isPublic && this.authService.isLoggedIn()) {
+          padletView = '/privatePadlets';
+        }
+        this.router.navigate(['..'+padletView+'/'+res.id],
+          {relativeTo: this.route});
+
+        this.padletForm.value.invitees.forEach((invitee: any) => {
+          this.userService.getUserByEmail(invitee.email).subscribe(user => {
+            const right = new Right(invitee.permission, true, false, res.id, user.id)
+            this.rightsService.invite(right).subscribe(res => {
+              this.padlet = PadletFactory.empty();
+              this.padletForm.reset(PadletFactory.empty());
+            })
+          });
+        })
+      });
+    }
+  }
+
+  cancel() {
+    this.padletRouterServ.redirectTo(this.router.url);
   }
 }
 

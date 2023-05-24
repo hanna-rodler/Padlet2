@@ -46,6 +46,7 @@ Route::post('/entries', [EntryController::class, 'save']);
 Route::get('/pendingInvitations/{userId}', [RightController::class, 'pendingInvitations']);
 Route::get('/nonPendingInvitations/{userId}', [RightController::class, 'nonPendingInvitations']);
 Route::post('/invite', [RightController::class, 'invite']);
+Route::delete('/invite', [RightController::class, 'deleteInvitation']);
 Route::put('/invitations/{userId}/{padletId}', [RightController::class, 'updateRight']);
 Route::put('/acceptInvitation/{userId}/{padletId}', [RightController::class,
     'acceptInvitation']);

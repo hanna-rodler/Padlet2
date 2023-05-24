@@ -1,5 +1,6 @@
 <form action="" class="ui large form" [formGroup]="padletForm" (ngSubmit)="submitForm()">
   <input type="hidden" formControlName="id">
+  <h4 class="ui dividing header">Padlet Information</h4>
   <div class="field">
     <label>Name</label>
     <input formControlName="name" type="text">
@@ -7,36 +8,83 @@
       {{errors['name']}}
     </div>
   </div>
-  <label *ngIf="canCreatePrivatePadlets()">
-    <input type="checkbox" formControlName="isPublic">
-    Make padlet public
-  </label>
+  <div class="field" *ngIf="canCreatePrivatePadlets() && isPadletOwner">
+    <div class="ui checkbox">
+      <input type="checkbox" formControlName="isPublic">
+      <label>Make padlet public</label>
+    </div>
+  </div>
 
 <!--  TODO: public / private -->
   <!--  TODO Rechteverwaltung -->
-  <br>
-  <div formArrayName="invitees">
-    <div *ngFor="let invitee of invitees.controls; index as i; last as l" [formGroupName]="i">
-        <div class="field">
-          <label> Email</label>
+  <div *ngIf="isPadletOwner">
+    <h4 class="ui dividing header" style="margin-top: 3rem;">User Permissions</h4>
+    <div formArrayName="invitees">
+      <div *ngFor="let invitee of invitees.controls; index as i; last as l" [formGroupName]="i" class="ui grid">
+        <div class="computer only row">
+          <div class="eight wide column">
+            <label> Email</label>
             <input type="email" formControlName="email" />
+          </div>
+          <div class="four wide column field">
+            <label>Permission:</label>
+            <select formControlName="permission">
+              <option value="read">Read</option>
+              <option value="write">Write</option>
+              <option value="create">Create</option>
+              <option value="delete">Delete</option>
+            </select>
+          </div>
+          <div class="four wide column" style="margin-top: 1.6rem;">
+            <button type="button" class="ui secondary basic button" (click)="removeInvitee(i)">Remove</button>
+          </div>
         </div>
-        <label>
-          Permission:
-          <select formControlName="permission">
-            <option value="read">Read</option>
-            <option value="write">Write</option>
-            <option value="create">Create</option>
-            <option value="delete">Delete</option>
-          </select>
-        </label>
-        <button type="ui button" (click)="removeInvitee(i)">Remove</button>
+        <div class="tablet only row">
+          <div class="eight wide column">
+            <label> Email</label>
+            <input type="email" formControlName="email" />
+          </div>
+          <div class="eight wide column field">
+            <label>Permission:</label>
+            <select formControlName="permission">
+              <option value="read">Read</option>
+              <option value="write">Write</option>
+              <option value="create">Create</option>
+              <option value="delete">Delete</option>
+            </select>
+          </div>
+          <div class="four wide column" style="margin-top: 1.6rem;">
+            <button type="button" class="ui secondary basic button" (click)="removeInvitee(i)">Remove</button>
+          </div>
+        </div>
+        <div class="mobile only row">
+          <div class="sixteen wide column">
+            <label> Email</label>
+            <input type="email" formControlName="email" />
+          </div>
+          <div class="sixteen wide column field">
+            <label>Permission:</label>
+            <select formControlName="permission">
+              <option value="read">Read</option>
+              <option value="write">Write</option>
+              <option value="create">Create</option>
+              <option value="delete">Delete</option>
+            </select>
+          </div>
+          <div class="eight wide column" style="margin-top: 1.6rem;">
+            <button type="button" class="ui secondary basic button" (click)="removeInvitee(i)">Remove</button>
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="row" style="margin-top: 1.5rem;">
+      <button type="button" class="ui secondary basic button" (click)="addInvitee()">Add Invitee</button><br><br>
+    </div>
   </div>
 
-  <button type="button" (click)="addInvitee()">Add Invitee</button>
-  <button type="submit">Invite</button>
-
-  <button type="submit" class="ui button"
-          [disabled]="padletForm.invalid">Save</button>
+  <div class="row" style="margin-top: 2rem;">
+    <button type="submit" class="ui button"
+            [disabled]="padletForm.invalid">Save</button>
+    <button type="button"  (click)="cancel()" class="ui grey basic button">Cancel</button>
+  </div>
 </form>

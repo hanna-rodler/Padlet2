@@ -58,7 +58,7 @@ class PadletController extends Controller
 
     public function detail($id) {
         $padlet = Padlet::where('id',$id)->with(
-            'entries.comments.user','entries.ratings.user', 'entries.user', 'user', 'rights')
+            'entries.comments.user','entries.ratings.user', 'entries.user', 'user', 'rights.user')
             ->first();
         return $padlet != null ? response()->json($padlet, 200) : response()
             ->json(null, 200);
@@ -94,6 +94,8 @@ class PadletController extends Controller
             if($padlet!=null){
                 //$request=$this->parseRequest($request);
                 $padlet->update($request->all());
+                $padlet->rights()->delete();
+
                 $padlet->save();
 
                 DB::commit();

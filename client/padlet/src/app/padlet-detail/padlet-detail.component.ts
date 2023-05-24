@@ -31,13 +31,11 @@ export class PadletDetailComponent implements OnInit{
   ngOnInit() {
     sessionStorage.removeItem('entryId');
     const params = this.route.snapshot.params;
-    // this.padlet = this.padletService.getSingle(params['id']);
     this.padletService.getSingle(params['id']).subscribe(
       (p:Padlet) => {
         this.padlet = p;
         this.authService.me().subscribe(me => {
           if(this.padlet.user_id === me.id) {
-            console.log('is padlet owner');
             this.isPadletOwner = true;
           } else if(this.padlet.rights !== undefined) {
             const filteredRights = this.padlet.rights.filter((right) => right.user_id === me.id);

@@ -28,6 +28,7 @@ class RightController extends Controller
         }
     }
 
+
     public function pendingInvitations(number | string $userId): JsonResponse {
         $rights = Right::where('user_id', $userId)->where('isInvitationPending', true)
             ->with('padlet', 'padlet.user')->get();
@@ -43,21 +44,19 @@ class RightController extends Controller
         ()->json(null, 200);
     }
 
-    public function updateRight(Request $request): JsonResponse {
+    public function updateRight($userId, $padletId, Request $request):
+JsonResponse {
         DB::beginTransaction();
         try {
-            $right = Right::where('padlet_id', 3)->where('user_id', 3)
-                ->first();
+            $right = Right::where(['padlet_id' => $padletId, 'user_id' =>
+                $userId])->first();
             if($right != null) {
                 $right->update($request->all());
-                echo 'gonna try to save';
                 $right->save();
-                echo 'saved';
 
                 DB::commit();
-                $updatedRight = Right::where('padlet_id', 3)
-                    ->where('user_id', 3)
-                    ->first();
+                $updatedRight = Right::where(['padlet_id' => $padletId, 'user_id' =>
+                    $userId])->first();
                 return response()->json($updatedRight, 201);
             } else {
                 return response()->json("Right not found", 420);
