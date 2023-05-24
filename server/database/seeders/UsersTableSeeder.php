@@ -40,7 +40,7 @@ class UsersTableSeeder extends Seeder
             'firstname'=>'Lea',
             'lastname'=>'Bauer',
             'email'=>'test@bauer.com',
-            'image'=>'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+            'image'=>'https://eqpbuyym5bp.exactdn.com/wp-content/2021/01/serendib_scops_owl_sir_4720.jpg',
             'password'=>bcrypt('testBauer'),
             'created_at'=>date("Y-m-d H:i:s"),
             'updated_at'=>date("Y-m-d H:i:s")
@@ -50,7 +50,7 @@ class UsersTableSeeder extends Seeder
             'firstname'=>'Timo',
             'lastname'=>'Schneider',
             'email'=>'test@schneider.com',
-            'image' => 'https://images.pexels.com/photos/3008355/pexels-photo-3008355.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+            'image' => 'https://images.pexels.com/photos/10502518/pexels-photo-10502518.jpeg',
             'password'=>bcrypt('testSchneider'),
             'created_at'=>date("Y-m-d H:i:s"),
             'updated_at'=>date("Y-m-d H:i:s")

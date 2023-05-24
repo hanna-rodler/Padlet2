@@ -1,12 +1,14 @@
 <div class="comment">
   <a class="avatar">
-    <img *ngIf="rating?.user?.image" [src]="rating?.user?.image">
-    <img *ngIf="!rating?.user?.image" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
+    <img *ngIf="rating?.user?.image" [src]="rating?.user?.image"
+         alt="{{rating?.user?.firstname}} {{rating?.user?.lastname}}">
+    <img *ngIf="!rating?.user?.image" src="https://img.freepik.com/free-icon/chick_318-594022.jpg?w=360"
+         alt="{{rating?.user?.firstname}} {{rating?.user?.lastname}}">
   </a>
   <div class="content">
     <a class="author">{{rating?.user?.firstname}} {{rating?.user?.lastname}}</a>
     <div class="metadata">
-      <span class="date">Today at 5:42PM</span>
+      <span class="date">{{ rating?.created_at|date:'short'}}</span>
     </div>
     <div class="text">
       <i *ngFor="let r of getRatingArray(rating?.stars)" class="yellow star icon"></i>

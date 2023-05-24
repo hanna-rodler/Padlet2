@@ -15,6 +15,8 @@ export class Entry {
     public comments?: Comment[],
     public ratings?: Rating[],
     public image?:string,
+    public updated_at?: Date,
+    public created_at?: Date,
   ) {
   }
 }

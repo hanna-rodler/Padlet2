@@ -3,7 +3,9 @@
   <h1 class="ui header">{{ padlet.name }} <span *ngIf="!editingPadlet" style="margin-left: 1rem;"
                                                 (click)="editPadlet()"> <i *ngIf="permission === 'delete' || permission  === 'write' || isPadletOwner" class="pencil alternate icon"></i> </span>
   </h1>
-  <div style="margin-bottom: 2rem;">by {{padlet.user.firstname}} {{padlet.user.lastname}}</div>
+  <div style="margin-bottom: 2rem;">by {{padlet.user.firstname}} {{padlet.user.lastname}}<br>
+    created on {{padlet.created_at|date : 'longDate'}}<br>
+  </div>
 
   <div class="ui segment" *ngIf="editingPadlet">
     <bs-padlet-form></bs-padlet-form>

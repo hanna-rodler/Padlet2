@@ -1,13 +1,13 @@
 <div class="comment">
   <a class="avatar">
-    <img *ngIf="comment?.user?.image" [src]="comment?.user?.image">
-    <img *ngIf="!comment?.user?.image" src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
-<!--    <img src="https://semantic-ui.com/images/avatar/small/joe.jpg">-->
+    <img *ngIf="comment?.user?.image" [src]="comment?.user?.image" alt="{{comment?.user?.firstname}} {{comment?.user?.lastname}}">
+    <img *ngIf="!comment?.user?.image" src="https://img.freepik.com/free-icon/chick_318-594022.jpg?w=360"
+         alt="{{comment?.user?.firstname}} {{comment?.user?.lastname}}">
   </a>
   <div class="content">
     <a class="author">{{ comment?.user?.firstname }} {{ comment?.user?.lastname }}</a>
     <div class="metadata">
-      <span class="date">Today at 5:42PM</span>
+      <span class="date"> {{comment?.created_at|date: 'short'}}</span>
     </div>
     <div class="text">
       {{ comment?.text }}

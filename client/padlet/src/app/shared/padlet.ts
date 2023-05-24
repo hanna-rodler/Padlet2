@@ -1,5 +1,4 @@
 import { Entry } from "./entry";
-import {Timestamp} from "rxjs";
 import {User} from "./user";
 import {Right} from "./right";
 export { Entry } from "./entry";
@@ -12,8 +11,11 @@ export class Padlet {
     public isPublic:boolean,
     public user_id:number,
     public user: User,
+    public created_at?: Date,
     public entries?: Entry[],
-    public rights?: Right[]
+    public rights?: Right[],
+    public updated_at?: Date,
+    public updatedHrsAgo?: number,
   ) {
   }
 }

@@ -6,6 +6,7 @@ export class Rating {
     public entry_id:number,
     public user_id:number,
     public user: User,
+    public created_at?: Date
   ) {
   }
 

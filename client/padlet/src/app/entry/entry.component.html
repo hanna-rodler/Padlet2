@@ -1,12 +1,12 @@
 <div class="content modalCard" (click)="showModal = true; addEntryId(entry?.id);">
   <img *ngIf="entry?.user?.image" class="right floated avatar" [src]="entry?.user?.image" alt="{{entry?.user?.firstname}} {{entry?.user?.lastname}}">
   <img *ngIf="!entry?.user?.image" class="right floated avatar" alt="{{entry?.user?.firstname}} {{entry?.user?.lastname}}"
-       src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
+       src="https://img.freepik.com/free-icon/chick_318-594022.jpg?w=360">
   <div class="header">
     {{ entry?.title }}
   </div>
   <div class="meta">
-    14h
+    {{ entry?.updated_at|date:'short'}}
   </div>
   <div class="description">
     {{ entry?.text}}
@@ -60,27 +60,26 @@
   </div>
   <div class="ui comments" style="margin-top: 3rem;">
     <h3 class="ui dividing header">Comments</h3>
+    <div *ngIf="entry?.comments && entry?.comments?.length===0" style="margin-top: 1rem;"><i class="frown outline icon"></i>No comments yet.</div>
     <div *ngIf="entry?.comments && entry?.comments?.length">
       <div class="bs-comment" *ngFor="let comment of entry?.comments" [comment]="comment">
     </div>
     </div>
     <bs-comment-form *ngIf="permission !== 'read'"></bs-comment-form>
-    <div *ngIf="entry?.comments && entry?.comments?.length===0" style="margin-top: 1rem;"><i class="frown outline icon"></i>No comments yet.</div>
     <div *ngIf="isAnonymUser" style="margin-top: 1rem;"><i class="info icon"></i>Sorry, you can only add comments if you are logged in.</div>
   </div>
   <div class="ui comments" style="margin-top: 3rem;">
     <h3 class="ui dividing header">Ratings</h3>
+    <div *ngIf="entry?.ratings  && entry?.ratings?.length === 0" style="margin-top: 1rem;"><i class="frown outline icon"></i>No ratings yet.</div>
     <div *ngIf="entry?.ratings && entry?.ratings?.length">
       <div class="bs-rating" *ngFor="let rating of entry?.ratings" [rating]="rating">
       </div>
     </div>
     <bs-rating-form *ngIf="!ratingExists && permission !== 'read'"></bs-rating-form>
     <div *ngIf="ratingExists" style="margin-top: 1rem;"><i class="info icon"></i>You already rated this entry.</div>
-    <div *ngIf="entry?.ratings  && entry?.ratings?.length === 0" style="margin-top: 1rem;"><i class="frown outline icon"></i>No ratings yet.</div>
     <div *ngIf="isAnonymUser" style="margin-top: 1rem;"><i class="info icon"></i>Please login to rate this entry.</div>
   </div>
   <m-modal-footer>
-    <m-button color="black" (click)="showModal = false; removeEntryId()">Close</m-button>
-    <!--    <m-button icon="checkmark" iconPosition="right" primary (click)="showModal = false">Yep, that's me</m-button>-->
+    <m-button class="black" (click)="showModal = false; removeEntryId()">Close</m-button>
   </m-modal-footer>
 </m-modal>

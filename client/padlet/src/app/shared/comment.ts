@@ -6,7 +6,8 @@ export class Comment {
     public text:string,
     public entry_id:number,
     public user_id:number,
-    public user: User
+    public user: User,
+    public created_at?: Date,
   ) {
   }
 }
