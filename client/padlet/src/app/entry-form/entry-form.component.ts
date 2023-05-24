@@ -82,12 +82,12 @@ export class EntryFormComponent implements OnInit {
       entry.user_id = 5;
     }
     if (this.isEditingEntry) {
-      this.entryService.update(entry).subscribe(res => {
+      this.entryService.update(entry).subscribe(() => {
         sessionStorage.removeItem('entryId');
         this.redirectTo(currentUrl);
       });
     } else {
-      this.entryService.create(entry).subscribe(res => {
+      this.entryService.create(entry).subscribe(() => {
         this.entry = EntryFactory.empty();
         this.entryForm.reset(EntryFactory.empty());
         let currentUrl = this.router.url;

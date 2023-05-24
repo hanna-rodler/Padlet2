@@ -28,6 +28,7 @@ export class PadletFormComponent implements OnInit {
   invitees: FormArray;
   isUpdating: boolean = false;
   isPadletOwner: boolean = false;
+  privateView:boolean = false;
 
 
   constructor(private fb: FormBuilder,
@@ -44,6 +45,12 @@ export class PadletFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    let regExPrivateView = /\/privatePadlets/;
+    if(regExPrivateView.test(this.router.url)) {
+      this.privateView = true;
+    } else {
+      this.privateView = false;
+    }
     const id:number = this.route.snapshot.params['id'];
     if(id !== undefined) {
       this.isUpdating = true;
@@ -57,6 +64,10 @@ export class PadletFormComponent implements OnInit {
       );
     }
     this.initPadlet();
+  }
+
+  isCreatingPrivatePadlet() {
+    return this.privateView && !this.isUpdating;
   }
 
   initPadlet() {
@@ -93,8 +104,7 @@ export class PadletFormComponent implements OnInit {
           // console.log(right.user);
           let fg = this.fb.group({
             id: right.user_id,
-            email: [right.user.email, [Validators.email],
-              PadletValidators.emailExists(this.userService)],
+            email: [right.user.email, [Validators.email]],
             permission: [right.permission],
             isInvitationPending: right.isInvitationPending,
             isInvitationAccepted: right.isInvitationAccepted
@@ -105,7 +115,7 @@ export class PadletFormComponent implements OnInit {
     } else {
       let fg = this.fb.group({
         id: new FormControl (0),
-        email: new FormControl ('', [Validators.email, PadletValidators.emailExists(this.userService)]),
+        email: new FormControl ('', [Validators.email]),
         permission: new FormControl('read')
       });
       this.invitees.push(fg);
@@ -131,8 +141,7 @@ export class PadletFormComponent implements OnInit {
   addInvitee() {
     this.invitees.push(this.fb.group({
         id: 0,
-        email: ['', [Validators.email],
-          PadletValidators.emailExists(this.userService)],
+        email: ['', [Validators.email]],
         permission: ['read', Validators.required],
       })
     );

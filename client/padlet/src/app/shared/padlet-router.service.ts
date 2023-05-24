@@ -11,6 +11,7 @@ export class PadletRouterService {
   ) { }
 
   redirectTo(uri: string) {
+    console.log('redirect');
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
       this.router.navigate([uri]));
   }

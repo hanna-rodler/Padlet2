@@ -49,15 +49,19 @@ export class HomeComponent implements OnInit {
 
   acceptInvite(invitation: any) {
     console.log('accepting invite ', invitation);
-    this.rightServ.acceptInvitation(invitation).subscribe(res => {
-      this.padletRouterServ.redirectTo(this.router.url);
+    this.rightServ.acceptInvitation(invitation).subscribe(() => {
+      this.redirectTo(this.router.url);
     })
   }
 
   declineInvite(invitation: Right) {
     this.rightServ.declineInvitation(invitation).subscribe(res => {
-      // console.log(res);
       this.padletRouterServ.redirectTo(this.router.url);
     });
+  }
+
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
   }
 }

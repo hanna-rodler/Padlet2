@@ -8,7 +8,7 @@
       {{errors['name']}}
     </div>
   </div>
-  <div class="field" *ngIf="canCreatePrivatePadlets() && isPadletOwner">
+  <div class="field" *ngIf="canCreatePrivatePadlets()">
     <div class="ui checkbox">
       <input type="checkbox" formControlName="isPublic">
       <label>Make padlet public</label>
@@ -17,7 +17,7 @@
 
 <!--  TODO: public / private -->
   <!--  TODO Rechteverwaltung -->
-  <div *ngIf="isPadletOwner">
+  <div *ngIf="isPadletOwner || isCreatingPrivatePadlet()">
     <h4 class="ui dividing header mt-3">User Permissions</h4>
     <div formArrayName="invitees">
       <div *ngFor="let invitee of invitees.controls; index as i; last as l" [formGroupName]="i" class="ui grid">
