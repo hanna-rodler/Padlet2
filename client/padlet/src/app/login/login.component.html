@@ -33,8 +33,10 @@
     </button>
   </form>
 </div>
-<div *ngIf="isLoggedIn()">
-  <button type="button" class="ui button"
-          (click)="logout()">Logout
-  </button>
+<div class="ui container">
+  <div *ngIf="isLoggedIn()">
+    <button type="button" class="ui button"
+            (click)="logout()">Logout
+    </button>
+  </div>
 </div>

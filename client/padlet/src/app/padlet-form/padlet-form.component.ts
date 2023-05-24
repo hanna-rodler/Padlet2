@@ -50,7 +50,6 @@ export class PadletFormComponent implements OnInit {
         padlet => {
           this.padlet = padlet;
           this.padlet.id = id;
-          console.log(this.padlet);
           this.initPadlet();
           this.checkPadletOwner();
         }
@@ -175,8 +174,8 @@ export class PadletFormComponent implements OnInit {
         padlet.user_id = this.authService.getCurrentUserId();
       } else {
         padlet.isPublic = true;
-        // Anonymus user has id 0
-        padlet.user_id = 0;
+        // Anonymus user has id 5
+        padlet.user_id = 5;
       }
       this.padletService.create(padlet).subscribe(res => {
         // redirect user to either padlet or privatePadlet overview

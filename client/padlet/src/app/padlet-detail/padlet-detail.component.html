@@ -9,7 +9,7 @@
     <bs-padlet-form></bs-padlet-form>
   </div>
 
-  <div class="m-b-5" style="margin-bottom: 1.5rem;" *ngIf="permission !== 'read'">
+  <div class="m-b-5" style="margin-bottom: 1.5rem;" *ngIf="permission !== 'read' || isAnonymUser">
     <button *ngIf="!addingEntry" class="ui orange labeled icon button" (click)="addEntry()">
       <i class="plus icon"></i>
       New Entry
@@ -30,7 +30,7 @@
 
   <div *ngIf="padlet.entries && padlet.entries.length > 0"></div>
   <div class="ui four stackable cards">
-    <div class="card bs-entry" *ngFor="let entry of padlet.entries" [entry]="entry" [permission]="getPermissions()">
+    <div class="card bs-entry" *ngFor="let entry of padlet.entries" [entry]="entry" [permission]="getPermissions()" [isAnonymUser]="isAnonymUser">
     </div>
   </div>
 

@@ -1,6 +1,6 @@
 <div class="content modalCard" (click)="showModal = true; addEntryId(entry?.id);">
-  <img *ngIf="entry?.user?.image" class="right floated avatar" [src]="entry?.user?.image">
-  <img *ngIf="!entry?.user?.image" class="right floated avatar"
+  <img *ngIf="entry?.user?.image" class="right floated avatar" [src]="entry?.user?.image" alt="{{entry?.user?.firstname}} {{entry?.user?.lastname}}">
+  <img *ngIf="!entry?.user?.image" class="right floated avatar" alt="{{entry?.user?.firstname}} {{entry?.user?.lastname}}"
        src="https://semantic-ui.com/images/avatar/small/jenny.jpg">
   <div class="header">
     {{ entry?.title }}
@@ -51,7 +51,6 @@
     </div>
   </div>
   <div class="description">
-    <!--    <div class="ui header">Entry by: Matt</div>-->
     <p>
       {{entry?.text}}
     </p>
@@ -60,12 +59,14 @@
     <bs-entry-form></bs-entry-form>
   </div>
   <div class="ui comments" style="margin-top: 3rem;">
-    <h3 class="ui header">Comments</h3>
+    <h3 class="ui dividing header">Comments</h3>
     <div *ngIf="entry?.comments && entry?.comments?.length">
       <div class="bs-comment" *ngFor="let comment of entry?.comments" [comment]="comment">
     </div>
     </div>
     <bs-comment-form *ngIf="permission !== 'read'"></bs-comment-form>
+    <div *ngIf="entry?.comments && entry?.comments?.length===0" style="margin-top: 1rem;"><i class="frown outline icon"></i>No comments yet.</div>
+    <div *ngIf="isAnonymUser" style="margin-top: 1rem;"><i class="info icon"></i>Sorry, you can only add comments if you are logged in.</div>
   </div>
   <div class="ui comments" style="margin-top: 3rem;">
     <h3 class="ui dividing header">Ratings</h3>
@@ -75,7 +76,8 @@
     </div>
     <bs-rating-form *ngIf="!ratingExists && permission !== 'read'"></bs-rating-form>
     <div *ngIf="ratingExists" style="margin-top: 1rem;"><i class="info icon"></i>You already rated this entry.</div>
-<!--    <div *ngIf="ratingExists">You already added a rating.</div>-->
+    <div *ngIf="entry?.ratings  && entry?.ratings?.length === 0" style="margin-top: 1rem;"><i class="frown outline icon"></i>No ratings yet.</div>
+    <div *ngIf="isAnonymUser" style="margin-top: 1rem;"><i class="info icon"></i>Please login to rate this entry.</div>
   </div>
   <m-modal-footer>
     <m-button color="black" (click)="showModal = false; removeEntryId()">Close</m-button>

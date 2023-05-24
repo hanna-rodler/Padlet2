@@ -36,7 +36,6 @@ export class EditPadletFormComponent implements OnInit {
       padlet => {
         this.padlet = padlet;
         this.padlet.id = id;
-        console.log(this.padlet);
         this.initPadlet();
       }
     );
@@ -66,7 +65,7 @@ export class EditPadletFormComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.editPadletForm.value);
+    // console.log(this.editPadletForm.value);
     const padlet:Padlet = PadletFactory.fromObject(this.editPadletForm.value);
     this.padletService.update(padlet).subscribe(res => {
       this.padletRouterServ.redirectTo(this.router.url);

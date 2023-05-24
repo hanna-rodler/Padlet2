@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
         if(this.user !== undefined && this.user.id !== undefined) {
           this.rightServ.getPendingInvitations(this.user.id).subscribe(res => {
             this.invitations = res;
-            console.log(this.invitations);
+            // console.log(this.invitations);
           });
         }
       }

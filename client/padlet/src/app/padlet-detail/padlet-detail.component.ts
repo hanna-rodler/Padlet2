@@ -14,10 +14,11 @@ import {AuthenticationService} from "../shared/authentication.service";
 })
 export class PadletDetailComponent implements OnInit{
   padlet: Padlet = PadletFactory.empty();
-  addingEntry = false;
-  editingPadlet = false;
-  isPadletOwner = false;
-  permission = '';
+  addingEntry:boolean = false;
+  editingPadlet:boolean = false;
+  isPadletOwner:boolean = false;
+  permission:string = '';
+  isAnonymUser:boolean = false;
 
   constructor(
     private padletService: PadletService,
@@ -34,16 +35,21 @@ export class PadletDetailComponent implements OnInit{
     this.padletService.getSingle(params['id']).subscribe(
       (p:Padlet) => {
         this.padlet = p;
-        this.authService.me().subscribe(me => {
-          if(this.padlet.user_id === me.id) {
-            this.isPadletOwner = true;
-          } else if(this.padlet.rights !== undefined) {
-            const filteredRights = this.padlet.rights.filter((right) => right.user_id === me.id);
-            // console.log('filtered Rights', filteredRights[0]);
-            this.permission = filteredRights[0].permission;
-            console.log('Permission:',this.permission);
-          }
-        });
+        if(this.authService.isLoggedIn()) {
+          this.authService.me().subscribe(me => {
+            if(this.padlet.user_id === me.id) {
+              this.isPadletOwner = true;
+            } else if(this.padlet.rights !== undefined) {
+              const filteredRights = this.padlet.rights.filter((right) => right.user_id === me.id);
+              // console.log('filtered Rights', filteredRights[0]);
+              this.permission = filteredRights[0].permission;
+              // console.log('Permission:',this.permission);
+            }
+          });
+        } else if(this.padlet.isPublic && this.authService.isLoggedOut()) {
+          this.permission = 'read';
+          this.isAnonymUser = true;
+        }
       }
     );
   }
@@ -63,7 +69,6 @@ export class PadletDetailComponent implements OnInit{
 
   editPadlet() {
     this.editingPadlet = true;
-    console.log('editing Padlet');
   }
 
   deletePadlet(id:number) {
@@ -80,7 +85,6 @@ export class PadletDetailComponent implements OnInit{
           this.toastr.success("The Entry was successfully deleted", "Deleted");}
         )
       }
-      console.log('deleted Padlet');
     }
   }
 

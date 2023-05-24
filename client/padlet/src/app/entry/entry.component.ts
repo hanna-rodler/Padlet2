@@ -16,6 +16,7 @@ import {PadletRouterService} from "../shared/padlet-router.service";
 export class EntryComponent implements OnInit {
   @Input() entry: Entry | undefined;
   @Input() permission: string | undefined;
+  @Input() isAnonymUser: boolean | undefined;
   // @Input() rights: Array<Right> | undefined;
   editingEntry:boolean = false;
   showModal:boolean = false;
@@ -38,7 +39,7 @@ export class EntryComponent implements OnInit {
       this.authService.me().subscribe(me => {
         if(this.entry !== undefined) {
           if (this.entry.user_id === me.id) {
-            console.log('is entry owner', this.entry.user_id, 'of ', this.entry.id);
+            // console.log('is entry owner', this.entry.user_id, 'of ', this.entry.id);
             this.isEntryOwner = true;
           }
         }

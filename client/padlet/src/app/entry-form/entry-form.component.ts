@@ -44,11 +44,10 @@ export class EntryFormComponent implements OnInit {
       this.initEntry();
     }
     this.initEntry();
-    console.log(this.isEditingEntry);
+    // console.log(this.isEditingEntry);
   }
 
   initEntry() {
-    // TODO: richtige id setzen
     this.entryForm = this.fb.group({
       id: this.entry.id,
       padlet_id: this.entry.padlet_id,
@@ -79,7 +78,8 @@ export class EntryFormComponent implements OnInit {
     if (this.authService.isLoggedIn()){
       entry.user_id = this.authService.getCurrentUserId();
     } else {
-      entry.user_id = 0;
+      // anonymous userId
+      entry.user_id = 5;
     }
     if (this.isEditingEntry) {
       this.entryService.update(entry).subscribe(res => {
