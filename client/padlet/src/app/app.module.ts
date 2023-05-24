@@ -13,7 +13,6 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {EntryComponent} from './entry/entry.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
-import {EditPadletFormComponent} from './edit-padlet-form/edit-padlet-form.component';
 import {PadletFormComponent} from './padlet-form/padlet-form.component';
 import {CommentComponent} from './comment/comment.component';
 import {SemanticUiModule} from "@mantic-ui/semantic-ui-angular";
@@ -28,7 +27,6 @@ import {RatingService} from "./shared/rating.service";
 import {UserService} from "./shared/user.service";
 import {TokenInterceptorService} from "./shared/token-interceptor.service";
 import {LoginInterceptorService} from "./shared/login-interceptor.service";
-import { PrivatePadletsComponent } from './private-padlets/private-padlets.component';
 import { UserComponent } from './user/user.component';
 
 @NgModule({
@@ -39,14 +37,12 @@ import { UserComponent } from './user/user.component';
     HomeComponent,
     EntryFormComponent,
     EntryComponent,
-    EditPadletFormComponent,
     PadletFormComponent,
     CommentComponent,
     RatingComponent,
     CommentFormComponent,
     RatingFormComponent,
     LoginComponent,
-    PrivatePadletsComponent,
     UserComponent
   ],
   imports: [
