@@ -10,6 +10,7 @@ import {RightService} from "../shared/right.service";
 import {Right} from "../shared/right";
 import {UserService} from "../shared/user.service";
 import {PadletRouterService} from "../shared/padlet-router.service";
+import {PadletValidators} from "../shared/padlet-validators";
 
 @Component({
   selector: 'bs-padlet-form',
@@ -79,7 +80,6 @@ export class PadletFormComponent implements OnInit {
   checkPadletOwner(){
     this.authService.me().subscribe(me => {
       if (this.padlet.user_id == me.id) {
-        console.log('is Padlet owner');
         this.isPadletOwner = true;
       }
     });
@@ -93,7 +93,8 @@ export class PadletFormComponent implements OnInit {
           // console.log(right.user);
           let fg = this.fb.group({
             id: right.user_id,
-            email: [right.user.email, [Validators.email]],
+            email: [right.user.email, [Validators.email],
+              PadletValidators.emailExists(this.userService)],
             permission: [right.permission],
             isInvitationPending: right.isInvitationPending,
             isInvitationAccepted: right.isInvitationAccepted
@@ -104,7 +105,7 @@ export class PadletFormComponent implements OnInit {
     } else {
       let fg = this.fb.group({
         id: new FormControl (0),
-        email: new FormControl ('', [Validators.email]),
+        email: new FormControl ('', [Validators.email, PadletValidators.emailExists(this.userService)]),
         permission: new FormControl('read')
       });
       this.invitees.push(fg);
@@ -130,7 +131,8 @@ export class PadletFormComponent implements OnInit {
   addInvitee() {
     this.invitees.push(this.fb.group({
         id: 0,
-        email: ['', [Validators.email]],
+        email: ['', [Validators.email],
+          PadletValidators.emailExists(this.userService)],
         permission: ['read', Validators.required],
       })
     );

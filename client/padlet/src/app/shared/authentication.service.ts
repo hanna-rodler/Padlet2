@@ -66,8 +66,7 @@ export class AuthenticationService {
 
   canViewPrivatePadlet(padletId: string): Observable<boolean> {
     const id = parseInt(padletId);
-    console.log('padletId', id);
-    console.log('user id', this.getCurrentUserId());
+    console.log('padletId', id, '\nuser id', this.getCurrentUserId());
 
     return this.padletService.getPrivatePadlets(this.getCurrentUserId()).pipe(
       map(padlets => {

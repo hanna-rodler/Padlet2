@@ -26,6 +26,9 @@
             <label> Email</label>
             <input type="email" formControlName="email" />
           </div>
+          <div *ngIf="errors['email']" class="ui negative message">
+            {{errors['email']}}
+          </div>
           <div class="four wide column field">
             <label>Permission:</label>
             <select formControlName="permission">
