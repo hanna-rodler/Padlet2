@@ -18,7 +18,7 @@
 <!--  TODO: public / private -->
   <!--  TODO Rechteverwaltung -->
   <div *ngIf="isPadletOwner">
-    <h4 class="ui dividing header" style="margin-top: 3rem;">User Permissions</h4>
+    <h4 class="ui dividing header mt-3">User Permissions</h4>
     <div formArrayName="invitees">
       <div *ngFor="let invitee of invitees.controls; index as i; last as l" [formGroupName]="i" class="ui grid">
         <div class="computer only row">
@@ -35,7 +35,7 @@
               <option value="delete">Delete</option>
             </select>
           </div>
-          <div class="four wide column" style="margin-top: 1.6rem;">
+          <div class="four wide column mb-1-6">
             <button type="button" class="ui secondary basic button" (click)="removeInvitee(i)">Remove</button>
           </div>
         </div>
@@ -53,7 +53,7 @@
               <option value="delete">Delete</option>
             </select>
           </div>
-          <div class="four wide column" style="margin-top: 1.6rem;">
+          <div class="four wide column mb-1-6">
             <button type="button" class="ui secondary basic button" (click)="removeInvitee(i)">Remove</button>
           </div>
         </div>
@@ -71,18 +71,18 @@
               <option value="delete">Delete</option>
             </select>
           </div>
-          <div class="eight wide column" style="margin-top: 1.6rem;">
+          <div class="eight wide column mb-1-6">
             <button type="button" class="ui secondary basic button" (click)="removeInvitee(i)">Remove</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="row" style="margin-top: 1.5rem;">
+    <div class="row mb-1-5">
       <button type="button" class="ui secondary basic button" (click)="addInvitee()">Add Invitee</button><br><br>
     </div>
   </div>
 
-  <div class="row" style="margin-top: 2rem;">
+  <div class="row mt-2">
     <button type="submit" class="ui button"
             [disabled]="padletForm.invalid">Save</button>
     <button type="button"  (click)="cancel()" class="ui grey basic button">Cancel</button>

@@ -4,10 +4,46 @@ body {
   margin: 10px;
 }
 
-.ui .header {
-  margin-top: 1rem;
+.ui.container {
+  margin-top: 3rem;
 }
 
 .icon:hover, .modalCard:hover {
   cursor: pointer;
+}
+
+.mt-1 {
+  margin-top: 1rem;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+
+.mt-3 {
+  margin-top: 2rem;
+}
+
+.max-w-650 {
+  max-width: 650px;
+}
+
+.mb-1-5 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-1-6 {
+  margin-bottom: 1.6rem;
+}
+
+.mb-2 {
+  margin-bottom: 2rem;
+}
+
+.ui.comments {
+  margin-top: 3rem;
+}
+
+.ml-1 {
+  margin-left: 1rem;
 }

@@ -1,9 +1,9 @@
 <div class="ui container">
 
-  <h1 class="ui header">{{ padlet.name }} <span *ngIf="!editingPadlet" style="margin-left: 1rem;"
+  <h1 class="ui header">{{ padlet.name }} <span *ngIf="!editingPadlet" class="ml-1"
                                                 (click)="editPadlet()"> <i *ngIf="permission === 'delete' || permission  === 'write' || isPadletOwner" class="pencil alternate icon"></i> </span>
   </h1>
-  <div style="margin-bottom: 2rem;">
+  <div class="mb-2">
     by <a [routerLink]="'../../user/'+padlet.user.id">{{padlet.user.firstname}} {{padlet.user.lastname}}</a><br>
     created on {{padlet.created_at|date : 'longDate'}}<br>
   </div>
@@ -12,7 +12,7 @@
     <bs-padlet-form></bs-padlet-form>
   </div>
 
-  <div class="m-b-5" style="margin-bottom: 1.5rem;" *ngIf="permission !== 'read' || isAnonymUser">
+  <div class="mb-1-5" *ngIf="permission !== 'read' || isAnonymUser">
     <button *ngIf="!addingEntry" class="ui orange labeled icon button" (click)="addEntry()">
       <i class="plus icon"></i>
       New Entry
@@ -42,7 +42,7 @@
     There are no padlet entries yet.
   </div>
 
-  <div class="container" style="margin-top: 20px;">
+  <div class="container mt-2">
     <button [routerLink]="padletView" class="ui orange button">{{ backButtonText }}
     </button>
   </div>

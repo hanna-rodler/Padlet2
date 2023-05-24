@@ -1,8 +1,8 @@
-<div class="ui container" style="margin-top: 3rem;">
+<div class="ui container">
   <h1 class="ui header" *ngIf="isLoggedIn()">Hello {{user?.firstname}}, welcome back</h1>
   <h1 class="ui header" *ngIf="!isLoggedIn()">Hello, welcome to this Padlet Website</h1>
 
-  <div style="margin-top: 2rem;">
+  <div class="mt-2">
     Have a look at all the <a [routerLink]="'../publicPadlets'"> Public Padlets</a><br>
   </div>
   <div *ngIf="!isLoggedIn">
@@ -16,7 +16,7 @@
   <div class="ui cards">
     <div *ngFor="let invitation of invitations" class="card">
         <div class="content">
-          <img class="right floated avatar ui image" [src]="invitation.padlet?.user?.image">
+          <img class="right floated avatar ui image" [src]="invitation.padlet?.user?.image" alt="{{invitation.padlet?.user?.firstname}} {{invitation.padlet?.user?.lastname}}">
           <div class="header">
             {{ invitation.padlet?.name }}
           </div>
