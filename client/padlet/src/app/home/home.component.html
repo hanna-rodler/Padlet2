@@ -1,10 +1,18 @@
-<div class="ui container">
-  <div *ngIf="isLoggedIn()">
-    <h1>Hello {{user?.firstname}}, welcome back</h1>
+<div class="ui container" style="margin-top: 3rem;">
+  <h1 class="ui header" *ngIf="isLoggedIn()">Hello {{user?.firstname}}, welcome back</h1>
+  <h1 class="ui header" *ngIf="!isLoggedIn()">Hello, welcome to this Padlet Website</h1>
 
+  <div style="margin-top: 2rem;">
+    Have a look at all the <a [routerLink]="'../publicPadlets'"> Public Padlets</a><br>
+  </div>
+  <div *ngIf="!isLoggedIn">
+    or <a [routerLink]="'../login'">login</a> to create private padlets and enjoy many more features!
+  </div>
+  <div *ngIf="isLoggedIn">
+    or continue with your <a [routerLink]="'../privatePadlets'">private padlets</a>!
   </div>
 
-  <h2 *ngIf="invitations && invitations.length">Pending Invitations:</h2>
+  <h2 class="ui header" *ngIf="isLoggedIn() && invitations && invitations.length">Pending Invitations:</h2>
   <div class="ui cards">
     <div *ngFor="let invitation of invitations" class="card">
         <div class="content">

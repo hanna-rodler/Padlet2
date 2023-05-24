@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import jwt_decode from "jwt-decode";
 import {HttpClient} from "@angular/common/http";
 import {UserService} from "./user.service";
+import {ActivatedRoute} from "@angular/router";
+import {PadletService} from "./padlet.service";
+import {Observable} from "rxjs";
+import {Padlet} from "./padlet";
+import { map } from 'rxjs/operators';
 
 interface Token {
   exp: number;
@@ -15,13 +20,22 @@ interface Token {
 })
 export class AuthenticationService {
   private api = 'http://padlet.s2010456026.student.kwmhgb.at/api/auth';
+  private myPrivatePadlets: Array<Padlet> = [];
 
   constructor(private http:HttpClient,
-              private userServ:UserService) {
+              private userServ:UserService,
+              private route: ActivatedRoute,
+              private padletService: PadletService
+              ) {
 
   }
 
   login(email: string, password: string) {
+    this.padletService.getPrivatePadlets(this.getCurrentUserId()).subscribe(
+      padlets => {console.log(padlets);
+        this.myPrivatePadlets = padlets;
+      }
+    );
     return this.http.post(`${this.api}/login`, {email: email, password: password});
   }
 
@@ -55,6 +69,18 @@ export class AuthenticationService {
     }
     return false;
   }
+
+  canViewPrivatePadlet(padletId: string): Observable<boolean> {
+    const id = parseInt(padletId);
+
+    return this.padletService.getPrivatePadlets(this.getCurrentUserId()).pipe(
+      map(padlets => {
+        const matchingPadlet = padlets.find(padlet => padlet.id === id);
+        return !!matchingPadlet;
+      })
+    );
+  }
+
 
   public setSessionStorage(token:string) {
     sessionStorage.setItem("token", token);
