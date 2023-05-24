@@ -5,7 +5,6 @@ import { PadletListComponent} from "./padlet-list/padlet-list.component";
 import { PadletDetailComponent } from "./padlet-detail/padlet-detail.component";
 import {HomeComponent} from "./home/home.component";
 import {LoginComponent} from "./login/login.component";
-import {PrivatePadletsComponent} from "./private-padlets/private-padlets.component";
 import {CanNavigateToLoggedInContentsGuard} from "./can-navigate-to-logged-in-contents.guard";
 import {CanNavigateToPrivatePadletDetailViewGuard} from "./can-navigate-to-private-padlet-detail-view.guard";
 import {UserComponent} from "./user/user.component";
@@ -16,7 +15,7 @@ const routes: Routes = [
   {path: 'publicPadlets', component: PadletListComponent},
   {path: 'publicPadlets/:id', component: PadletDetailComponent},
   {path: 'privatePadlets/:id', component: PadletDetailComponent, canActivate: [CanNavigateToLoggedInContentsGuard, CanNavigateToPrivatePadletDetailViewGuard]},
-  {path: 'privatePadlets', component: PrivatePadletsComponent, canActivate: [CanNavigateToLoggedInContentsGuard]},
+  {path: 'privatePadlets', component: PadletListComponent, canActivate: [CanNavigateToLoggedInContentsGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'user/:userId', component: UserComponent}
 ];

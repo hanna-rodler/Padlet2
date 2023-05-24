@@ -86,13 +86,11 @@ export class PadletFormComponent implements OnInit {
   }
 
   buildInviteesArray(){
-    console.log('building invitees array');
     if(this.padlet.rights) {
-      console.log('getting rights');
       this.invitees = this.fb.array([]);
       for (let right of this.padlet.rights) {
         if(right.user !== undefined) {
-          console.log(right.user);
+          // console.log(right.user);
           let fg = this.fb.group({
             id: right.user_id,
             email: [right.user.email, [Validators.email]],
@@ -146,17 +144,15 @@ export class PadletFormComponent implements OnInit {
     this.padletForm.value.invitees = this.padletForm.value.invitees.filter(
       (invitee: {email:string}) => invitee.email !== ''
     );
-    console.log('invitees', this.padletForm.value.invitees);
-
-
-
+    // console.log('invitees', this.padletForm.value.invitees);
+    let currentUrl = this.router.url;
     if(this.isUpdating) {
       const padlet:Padlet = PadletFactory.fromObject(this.padletForm.value);
       this.padletService.update(padlet).subscribe(res => {
         console.log(res);
         this.padletForm.value.invitees.forEach((invitee: any) => {
           this.userService.getUserByEmail(invitee.email).subscribe(user => {
-            console.log(invitee.isInvitationPending);
+            // console.log(invitee.isInvitationPending);
             const isInvitationPending = invitee.isInvitationPending !== undefined ? invitee.isInvitationPending : true;
             const isInvitationAccepted = invitee.isInvitationAccepted !== undefined ? invitee.isInvitationAccepted : false;
             const right = new Right(invitee.permission, isInvitationPending, isInvitationAccepted, padlet.id, user.id)
@@ -166,7 +162,8 @@ export class PadletFormComponent implements OnInit {
             })
           });
         })
-        this.padletRouterServ.redirectTo(this.router.url);
+        // this.router.navigate(['../'], {relativeTo: this.route});
+        this.redirectTo(currentUrl);
       })
     } else {
       const padlet:Padlet = PadletFactory.fromObject(this.padletForm.value);
@@ -180,7 +177,7 @@ export class PadletFormComponent implements OnInit {
       this.padletService.create(padlet).subscribe(res => {
         // redirect user to either padlet or privatePadlet overview
         let padletView = '/publicPadlets'
-        if(this.router.url === '/privatePadlets' && !padlet.isPublic && this.authService.isLoggedIn()) {
+        if(currentUrl === '/privatePadlets' && !padlet.isPublic && this.authService.isLoggedIn()) {
           padletView = '/privatePadlets';
         }
         this.router.navigate(['..'+padletView+'/'+res.id],
@@ -201,6 +198,12 @@ export class PadletFormComponent implements OnInit {
 
   cancel() {
     this.padletRouterServ.redirectTo(this.router.url);
+  }
+
+  redirectTo(uri: string) {
+    console.log('redirecting to', uri);
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
   }
 }
 

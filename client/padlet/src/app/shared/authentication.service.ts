@@ -20,7 +20,6 @@ interface Token {
 })
 export class AuthenticationService {
   private api = 'http://padlet.s2010456026.student.kwmhgb.at/api/auth';
-  private myPrivatePadlets: Array<Padlet> = [];
 
   constructor(private http:HttpClient,
               private userServ:UserService,
@@ -31,11 +30,6 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-    this.padletService.getPrivatePadlets(this.getCurrentUserId()).subscribe(
-      padlets => {console.log(padlets);
-        this.myPrivatePadlets = padlets;
-      }
-    );
     return this.http.post(`${this.api}/login`, {email: email, password: password});
   }
 
@@ -72,10 +66,14 @@ export class AuthenticationService {
 
   canViewPrivatePadlet(padletId: string): Observable<boolean> {
     const id = parseInt(padletId);
+    console.log('padletId', id);
+    console.log('user id', this.getCurrentUserId());
 
     return this.padletService.getPrivatePadlets(this.getCurrentUserId()).pipe(
       map(padlets => {
+        console.log(padlets);
         const matchingPadlet = padlets.find(padlet => padlet.id === id);
+        console.log('matchingPadlet', matchingPadlet);
         return !!matchingPadlet;
       })
     );
