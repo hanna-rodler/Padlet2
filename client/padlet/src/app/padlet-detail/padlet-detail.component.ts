@@ -19,6 +19,9 @@ export class PadletDetailComponent implements OnInit{
   isPadletOwner:boolean = false;
   permission:string = '';
   isAnonymUser:boolean = false;
+  padletView: string = '/publicPadlets';
+  backButtonText: string = 'back to public padlets';
+
 
   constructor(
     private padletService: PadletService,
@@ -52,6 +55,11 @@ export class PadletDetailComponent implements OnInit{
         }
       }
     );
+    let regExPrivateView = /\/privatePadlets\/\d+/;
+    if(regExPrivateView.test(this.router.url) && this.authService.isLoggedIn()) {
+      this.padletView = '/privatePadlets';
+      this.backButtonText = 'back to my padlets';
+    }
   }
 
 
@@ -75,12 +83,7 @@ export class PadletDetailComponent implements OnInit{
     if (confirm('Do you really want to delete the padlet?')) {
       if (id !== undefined) {
         this.padletService.delete(id).subscribe(res => {
-          let padletView = '/publicPadlets';
-          let regExPrivateView = /\/privatePadlets\/\d+/;
-          if(regExPrivateView.test(this.router.url) && this.authService.isLoggedIn()) {
-            padletView = '/privatePadlets';
-          }
-          this.router.navigate(['../../'+padletView],
+          this.router.navigate(['../../'+this.padletView],
             {relativeTo: this.route});
           this.toastr.success("The Entry was successfully deleted", "Deleted");}
         )
