@@ -1,0 +1,23 @@
+<div class="ui container">
+  <h2 class="ui header">
+    User Detail
+  </h2>
+  <div class="ui card">
+    <div class="image">
+      <img *ngIf="user.image" [src]="user.image" alt="{{user.firstname}} {{user.lastname}}">
+      <img *ngIf="!user.image" src="https://img.freepik.com/free-icon/chick_318-594022.jpg?w=360"
+           alt="{{user.firstname}} {{user.lastname}}">
+    </div>
+    <div class="content">
+      <div class="header">{{user.firstname}} {{user.lastname}}</div>
+      <div class="description">
+        joined on {{user.created_at|date: 'longDate'}}
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top: 20px;">
+    <button (click)="goBack()" class="ui orange button">back
+    </button>
+  </div>
+</div>

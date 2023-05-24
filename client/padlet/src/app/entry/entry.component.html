@@ -1,7 +1,9 @@
 <div class="content modalCard" (click)="showModal = true; addEntryId(entry?.id);">
-  <img *ngIf="entry?.user?.image" class="right floated avatar" [src]="entry?.user?.image" alt="{{entry?.user?.firstname}} {{entry?.user?.lastname}}">
-  <img *ngIf="!entry?.user?.image" class="right floated avatar" alt="{{entry?.user?.firstname}} {{entry?.user?.lastname}}"
-       src="https://img.freepik.com/free-icon/chick_318-594022.jpg?w=360">
+  <div [routerLink]="getUserLink()">
+    <img *ngIf="entry?.user?.image" class="right floated avatar" [src]="entry?.user?.image" alt="{{entry?.user?.firstname}} {{entry?.user?.lastname}}">
+    <img *ngIf="!entry?.user?.image" class="right floated avatar" alt="{{entry?.user?.firstname}} {{entry?.user?.lastname}}"
+         src="https://img.freepik.com/free-icon/chick_318-594022.jpg?w=360">
+  </div>
   <div class="header">
     {{ entry?.title }}
   </div>

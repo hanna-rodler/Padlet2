@@ -3,7 +3,8 @@
   <h1 class="ui header">{{ padlet.name }} <span *ngIf="!editingPadlet" style="margin-left: 1rem;"
                                                 (click)="editPadlet()"> <i *ngIf="permission === 'delete' || permission  === 'write' || isPadletOwner" class="pencil alternate icon"></i> </span>
   </h1>
-  <div style="margin-bottom: 2rem;">by {{padlet.user.firstname}} {{padlet.user.lastname}}<br>
+  <div style="margin-bottom: 2rem;">
+    by <a [routerLink]="'../../user/'+padlet.user.id">{{padlet.user.firstname}} {{padlet.user.lastname}}</a><br>
     created on {{padlet.created_at|date : 'longDate'}}<br>
   </div>
 

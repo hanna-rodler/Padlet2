@@ -6,20 +6,24 @@ import { PadletDetailComponent } from "./padlet-detail/padlet-detail.component";
 import {HomeComponent} from "./home/home.component";
 import {LoginComponent} from "./login/login.component";
 import {PrivatePadletsComponent} from "./private-padlets/private-padlets.component";
+import {CanNavigateToLoggedInContentsGuard} from "./can-navigate-to-logged-in-contents.guard";
+import {CanNavigateToPrivatePadletDetailViewGuard} from "./can-navigate-to-private-padlet-detail-view.guard";
+import {UserComponent} from "./user/user.component";
 
 const routes: Routes = [
-  {path: '', redirectTo: '/publicPadlets', pathMatch: 'full'},
+  {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'publicPadlets', component: PadletListComponent},
   {path: 'publicPadlets/:id', component: PadletDetailComponent},
-  {path: 'privatePadlets/:id', component: PadletDetailComponent},
-  {path: 'privatePadlets', component: PrivatePadletsComponent},
-  {path: 'login', component: LoginComponent}
+  {path: 'privatePadlets/:id', component: PadletDetailComponent, canActivate: [CanNavigateToLoggedInContentsGuard, CanNavigateToPrivatePadletDetailViewGuard]},
+  {path: 'privatePadlets', component: PrivatePadletsComponent, canActivate: [CanNavigateToLoggedInContentsGuard]},
+  {path: 'login', component: LoginComponent},
+  {path: 'user/:userId', component: UserComponent}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: []
+  providers: [CanNavigateToLoggedInContentsGuard, CanNavigateToPrivatePadletDetailViewGuard]
 })
 export class AppRoutingModule { }

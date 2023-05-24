@@ -91,4 +91,11 @@ export class EntryComponent implements OnInit {
     this.ratingExists = false;
     this.editingEntry = false
   }
+
+  getUserLink(): string {
+    if(this.entry !== undefined && this.entry.user !== undefined)
+      return '../../user/'+this.entry.user.id;
+    else
+      return '';
+  }
 }

@@ -1,5 +1,5 @@
 <div class="comment">
-  <a class="avatar">
+  <a class="avatar" [routerLink]="getUserLink()">
     <img *ngIf="rating?.user?.image" [src]="rating?.user?.image"
          alt="{{rating?.user?.firstname}} {{rating?.user?.lastname}}">
     <img *ngIf="!rating?.user?.image" src="https://img.freepik.com/free-icon/chick_318-594022.jpg?w=360"

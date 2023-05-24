@@ -29,6 +29,7 @@ import {UserService} from "./shared/user.service";
 import {TokenInterceptorService} from "./shared/token-interceptor.service";
 import {LoginInterceptorService} from "./shared/login-interceptor.service";
 import { PrivatePadletsComponent } from './private-padlets/private-padlets.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { PrivatePadletsComponent } from './private-padlets/private-padlets.compo
     CommentFormComponent,
     RatingFormComponent,
     LoginComponent,
-    PrivatePadletsComponent
+    PrivatePadletsComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

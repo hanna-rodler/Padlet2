@@ -29,4 +29,11 @@ export class RatingComponent {
 
     }
   }
+
+  getUserLink(): string {
+    if(this.rating !== undefined && this.rating.user !== undefined)
+      return '../../user/'+this.rating.user.id;
+    else
+      return '';
+  }
 }

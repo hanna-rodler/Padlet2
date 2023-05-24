@@ -81,7 +81,9 @@ class UsersTableSeeder extends Seeder
             'lastname'=>'Bird',
             'email'=>'test@bird.com',
             'image' => 'https://live.staticflickr.com/2899/14418137058_8e27762192_z.jpg',
-            'password'=>bcrypt('testBird')
+            'password'=>bcrypt('testBird'),
+            'created_at'=>date("Y-m-d H:i:s"),
+            'updated_at'=>date("Y-m-d H:i:s")
         ]);
 
         DB::table('users')->insert([
@@ -89,7 +91,9 @@ class UsersTableSeeder extends Seeder
             'lastname'=>'Solarikova',
             'email'=>'test@solarikova.com',
             'image' => 'https://t1.ea.ltmcdn.com/en/posts/5/8/0/dietary_habits_of_the_toucan_85_600.jpg',
-            'password'=>bcrypt('testSolarikova')
+            'password'=>bcrypt('testSolarikova'),
+            'created_at'=>date("Y-m-d H:i:s"),
+            'updated_at'=>date("Y-m-d H:i:s")
         ]);
 
         DB::table('users')->insert([
@@ -97,7 +101,9 @@ class UsersTableSeeder extends Seeder
             'lastname'=>'Rodler',
             'email'=>'test@rodler.com',
             'image' => 'https://australianparrots.files.wordpress.com/2008/09/cockysquare.jpg',
-            'password'=>bcrypt('testRodler')
+            'password'=>bcrypt('testRodler'),
+            'created_at'=>date("Y-m-d H:i:s"),
+            'updated_at'=>date("Y-m-d H:i:s")
         ]);
     }
 }

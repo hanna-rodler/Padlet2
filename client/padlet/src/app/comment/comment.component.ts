@@ -11,4 +11,10 @@ import { Comment} from "../shared/entry";
 export class CommentComponent {
   @Input() comment: Comment | undefined;
 
+  getUserLink(): string {
+    if(this.comment !== undefined && this.comment.user !== undefined)
+      return '../../user/'+this.comment.user.id;
+    else
+      return '';
+  }
 }
